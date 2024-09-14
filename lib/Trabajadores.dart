@@ -24,100 +24,103 @@ class _ModuloInicioState extends State<ModuloInicio> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: const Color(0xF2F2F2F2),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 80, left: 25, right: 25),
-              child: Row(
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 80, left: 25, right: 25),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    ClipOval(
+                      child: Image.asset(
+                        'assets/chris.jpg',
+                        width: 70,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    const SizedBox(width: 25,),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'Hey, Christian.',
+                            style: GoogleFonts.poppins(
+                              textStyle: const TextStyle(fontSize: 30),
+                              fontWeight: FontWeight.w600
+                            ),
+                          ),
+                          Text(
+                            'Comencemos..',
+                            style: GoogleFonts.poppins(
+                              textStyle: const TextStyle(fontSize: 20),
+                              fontWeight: FontWeight.w600
+                            ),
+                          )
+                        ],
+                    )
+                  ],
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 25, left: 25, right: 25),
+                child: SearchBarWidget(),
+              ),
+               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  ClipOval(
-                    child: Image.asset(
-                      'assets/chris.jpg',
-                      width: 70,
-                      fit: BoxFit.cover,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 25, left: 25),
+                    child: Text(
+                      'Trabajadores Destacados',
+                      style: GoogleFonts.poppins(
+                          textStyle: const TextStyle(fontSize: 15),
+                          fontWeight: FontWeight.w600),
                     ),
                   ),
-                  const SizedBox(width: 25,),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'Hey, Christian.',
-                          style: GoogleFonts.poppins(
-                            textStyle: const TextStyle(fontSize: 30),
-                            fontWeight: FontWeight.w600
-                          ),
-                        ),
-                        Text(
-                          'Comencemos..',
-                          style: GoogleFonts.poppins(
-                            textStyle: const TextStyle(fontSize: 20),
-                            fontWeight: FontWeight.w600
-                          ),
-                        )
-                      ],
-                  )
                 ],
               ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(top: 25, left: 25, right: 25),
-              child: SearchBarWidget(),
-            ),
-             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 25, left: 25),
-                  child: Text(
-                    'Trabajadores Destacados',
-                    style: GoogleFonts.poppins(
-                        textStyle: const TextStyle(fontSize: 15),
-                        fontWeight: FontWeight.w600),
+              const ListItemWidget(),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 0, left: 25),
+                    child: Text(
+                      'Categorias',
+                      style: GoogleFonts.poppins(
+                          textStyle: const TextStyle(fontSize: 15),
+                          fontWeight: FontWeight.w600),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const ListItemWidget(),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 0, left: 25),
-                  child: Text(
-                    'Categorias',
-                    style: GoogleFonts.poppins(
-                        textStyle: const TextStyle(fontSize: 15),
-                        fontWeight: FontWeight.w600),
+                ],
+              ),
+              Container(
+                child: CategoriaWidget(),
+              ),
+               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 0, left: 25),
+                    child: Text(
+                      'Trabajadores Disponibles',
+                      style: GoogleFonts.poppins(
+                          textStyle: const TextStyle(fontSize: 15),
+                          fontWeight: FontWeight.w600),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            Container(
-              child: CategoriaWidget(),
-            ),
-             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 0, left: 25),
-                  child: Text(
-                    'Trabajadores Disponibles',
-                    style: GoogleFonts.poppins(
-                        textStyle: const TextStyle(fontSize: 15),
-                        fontWeight: FontWeight.w600),
-                  ),
-                ),
-              ],
-            ),
-            const Trabajadoreswidget()
-          ],
+                ],
+              ),
+              const Trabajadoreswidget(),
+              SizedBox(height: 80,)
+            ],
+          ),
         ),
       ),
     );

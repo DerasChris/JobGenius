@@ -12,7 +12,7 @@ class Trabajadoreswidget extends StatelessWidget {
         shrinkWrap: false,
         scrollDirection: Axis.horizontal,
         itemCount: _list.length,
-        padding: const EdgeInsets.only(left: 25,right: 5),
+        padding: const EdgeInsets.only(left: 15,right: 5),
         itemBuilder: (BuildContext context, int index) {
           return  Padding(
             padding: const EdgeInsets.only(left: 10, right: 0, top: 11),
