@@ -12,10 +12,10 @@ class ListItemWidget extends StatelessWidget {
         shrinkWrap: false,
         scrollDirection: Axis.horizontal,
         itemCount: _list.length,
-        padding: const EdgeInsets.only(left: 25,right: 25),
+        padding: const EdgeInsets.only(left: 15,right: 15),
         itemBuilder: (BuildContext context, int index) {
           return  Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10, top: 11),
+            padding: const EdgeInsets.only(left: 10, right: 15, top: 11),
             child: Column(
               children: [
                 Container(
