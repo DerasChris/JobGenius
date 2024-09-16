@@ -8,9 +8,7 @@ class Seguridad extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         backgroundColor: const Color(0xF2F2F2F2),
         body: Padding(
           padding: const EdgeInsets.only(top: 50, left: 25, right: 25),
@@ -108,7 +106,6 @@ class Seguridad extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }
