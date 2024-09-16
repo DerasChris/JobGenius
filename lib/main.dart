@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:jobjenius/navegacion.dart';
 
 
-void main(){
-  runApp(const Main());
-}
 
 class Main extends StatelessWidget {
   const Main({super.key});

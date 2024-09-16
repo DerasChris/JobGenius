@@ -2,7 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:jobjenius/Trabajadores.dart';
 import 'package:jobjenius/seguridad.dart';
-
+import 'theme/app_color.dart';
 class Navigation extends StatefulWidget {
   const Navigation({super.key});
 
@@ -66,13 +66,13 @@ class _NavigationState extends State<Navigation> {
               ),
             child: CurvedNavigationBar(
               height: 50,
-              color: const Color.fromARGB(255, 255, 193, 7),
+              color: appColor.amarillo,
               key: navigationKey,
               items: items,
               index: index,
               onTap: (index )=> setState (() => this.index = index),
               backgroundColor: Colors.transparent ,
-              buttonBackgroundColor: const Color.fromARGB(255, 0, 51, 102),
+              buttonBackgroundColor: appColor.azul,
             ),
           ),
         ),
