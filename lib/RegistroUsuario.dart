@@ -175,13 +175,10 @@ class RegistroUsuarioState extends State<RegistroUsuario> {
               });
             },
             child: AvatarGlow(
-              endRadius: 60.0,
               animate: _isAnimating,
               glowColor: const Color.fromARGB(255, 255, 193, 7),
               duration: const Duration(milliseconds: 2000),
               repeat: true,
-              repeatPauseDuration: const Duration(milliseconds: 100),
-              showTwoGlows: true,
               child: Material(
                 elevation: 8.0,
                 shape: const CircleBorder(),
