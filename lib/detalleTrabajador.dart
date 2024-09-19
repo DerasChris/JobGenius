@@ -74,18 +74,85 @@ class _DetalleTrabajador extends State<DetalleTrabajador>{
                 Padding(
                   padding: const EdgeInsets.only(top: 20, bottom: 20),
                   child: Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        ClipOval(
-                          child: Icon(Icons.favorite, color: appColor.azul),
+                    child: Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+
+                            Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: appColor.amarillo,
+                                shape: BoxShape.circle, 
+                              ),
+                              child: ClipOval(
+                                child: Icon(
+                                  Icons.favorite, 
+                                  color: appColor.azul,
+                                ),
+                              ),
+                            ),
+                            const Text(
+                              '150+',
+                              style: TextStyle( color:Colors.white)
+                            ),
+                            const Text('Trabajos Hechos', style: TextStyle( color:Colors.white))
+                          ],
                         ),
-                        const Text(
-                          '150+',
-                          style: TextStyle( color:Colors.white)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+
+                            Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: appColor.amarillo,
+                                shape: BoxShape.circle, 
+                              ),
+                              child: ClipOval(
+                                child: Icon(
+                                  Icons.emoji_events, 
+                                  color: appColor.azul,
+                                ),
+                              ),
+                            ),
+                            const Text(
+                              '30 años',
+                              style: TextStyle( color:Colors.white)
+                            ),
+                            const Text('Experiencia', style: TextStyle( color:Colors.white))
+                          ],
                         ),
-                        const Text('Trabajos Hechos', style: TextStyle( color:Colors.white))
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+
+                            Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: appColor.amarillo,
+                                shape: BoxShape.circle, 
+                              ),
+                              child: ClipOval(
+                                child: Icon(
+                                  Icons.star, 
+                                  color: appColor.azul,
+                                ),
+                              ),
+                            ),
+                            const Text(
+                              '4.9',
+                              style: TextStyle( color:Colors.white)
+                            ),
+                            const Text('Rating', style: TextStyle( color:Colors.white))
+                          ],
+                        ),
                       ],
+
                     ),
                     
                   ),
