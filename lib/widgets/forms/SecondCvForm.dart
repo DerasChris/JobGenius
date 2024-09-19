@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:jobjenius/extensions/SafeNavigationExtension.dart';
 import 'package:jobjenius/theme/app_color.dart';
 
-class SecondCvForm extends StatefulWidget {
-  const SecondCvForm({super.key});
+class SecondCvScreen extends StatefulWidget {
+  const SecondCvScreen({super.key});
 
   @override
-  _SecondCvFormState createState() => _SecondCvFormState();
+  _SecondCvScreenState createState() => _SecondCvScreenState();
 }
 
-class _SecondCvFormState extends State<SecondCvForm> {
+class _SecondCvScreenState extends State<SecondCvScreen> {
   bool? respVehiculo;
   bool? respViaje;
   int? respInicio;
@@ -24,7 +25,12 @@ class _SecondCvFormState extends State<SecondCvForm> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => context.safeNavigateBack(),
         ),
-        title: const Text('Mi Curriculum Vitae'),
+        title: Text(
+          'Mi Curriculum Vitae',
+          style: GoogleFonts.poppins(
+              textStyle: const TextStyle(fontSize: 25),
+              fontWeight: FontWeight.w600),
+        ),
         centerTitle: true,
       ),
       body: Padding(
@@ -32,7 +38,11 @@ class _SecondCvFormState extends State<SecondCvForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('¿Posee Vehiculo Propio?'),
+            Text('¿Posee Vehiculo Propio?',
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w700,
+                  color: const Color.fromARGB(255, 0, 51, 102),
+                )),
             Row(
               children: [
                 Radio<bool>(
@@ -44,7 +54,11 @@ class _SecondCvFormState extends State<SecondCvForm> {
                     });
                   },
                 ),
-                const Text('Sí'),
+                Text('Sí',
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black,
+                    )),
                 Radio<bool>(
                   value: false,
                   groupValue: respVehiculo,
@@ -54,11 +68,19 @@ class _SecondCvFormState extends State<SecondCvForm> {
                     });
                   },
                 ),
-                const Text('No'),
+                Text('No',
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black,
+                    )),
               ],
             ),
             const SizedBox(height: 16),
-            const Text('¿Posee Disponibilidad de Viaje?'),
+            Text('¿Posee Disponibilidad de Viaje?',
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w700,
+                  color: const Color.fromARGB(255, 0, 51, 102),
+                )),
             Row(
               children: [
                 Radio<bool>(
@@ -70,7 +92,11 @@ class _SecondCvFormState extends State<SecondCvForm> {
                     });
                   },
                 ),
-                const Text('Sí'),
+                Text('Sí',
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black,
+                    )),
                 Radio<bool>(
                   value: false,
                   groupValue: respViaje,
@@ -80,11 +106,21 @@ class _SecondCvFormState extends State<SecondCvForm> {
                     });
                   },
                 ),
-                const Text('No'),
+                Text('No',
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black,
+                    )),
               ],
             ),
             const SizedBox(height: 16),
-            const Text('Disponibilidad de Inicio'),
+            Text(
+              'Disponibilidad de Inicio',
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w700,
+                color: const Color.fromARGB(255, 0, 51, 102),
+              ),
+            ),
             Row(
               children: [
                 Radio<int>(
@@ -96,7 +132,11 @@ class _SecondCvFormState extends State<SecondCvForm> {
                     });
                   },
                 ),
-                const Text('Inmediata'),
+                Text('Inmediata',
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black,
+                    )),
                 Radio<int>(
                   value: 2,
                   groupValue: respInicio,
@@ -106,7 +146,11 @@ class _SecondCvFormState extends State<SecondCvForm> {
                     });
                   },
                 ),
-                const Text('Parcial'),
+                Text('Parcial',
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black,
+                    )),
               ],
             ),
             const SizedBox(height: 16),
@@ -115,11 +159,13 @@ class _SecondCvFormState extends State<SecondCvForm> {
               decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   labelText: "Nivel de Estudio",
+                  hintStyle: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w700,
+                    color: const Color.fromARGB(255, 0, 51, 102),
+                  ),
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.mic),
-                    onPressed: () {
-                      //Logica para activar el reconocimiento de voz
-                    },
+                    onPressed: () {},
                   )),
             ),
             const SizedBox(height: 16),
@@ -128,6 +174,10 @@ class _SecondCvFormState extends State<SecondCvForm> {
               decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   labelText: "Contacto",
+                  hintStyle: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w700,
+                    color: const Color.fromARGB(255, 0, 51, 102),
+                  ),
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.mic),
                     onPressed: () {
@@ -151,7 +201,11 @@ class _SecondCvFormState extends State<SecondCvForm> {
                     foregroundColor: appColor.azul,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 12)),
-                child: const Text('Guardar Curriculum Vitae'),
+                child: Text('Guardar Curriculum Vitae',
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w700,
+                      color: const Color.fromARGB(255, 0, 51, 102),
+                    )),
               ),
             )
           ],
