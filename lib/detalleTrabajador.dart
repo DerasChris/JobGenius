@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -42,13 +43,52 @@ class _DetalleTrabajador extends State<DetalleTrabajador>{
                             children: <Widget>[
                               Icon(Icons.arrow_back, color: Colors.white,),
                               Text(
-                                'Detalles del Trabajador',
+                                'Detalle del Trabajador',
                                 style: TextStyle( color:Colors.white)
                               ),
                             ],
                         ),
                       ],
                     ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 20, bottom: 20),
+                  child: Center(
+                    child: Container(
+                      width: 100.0,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(width: 2.5, color: Colors.white)
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset(
+                          'armando_casas.jpg', 
+                          width: 50,
+                        ),
+                      )
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20, bottom: 20),
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        ClipOval(
+                          child: Icon(Icons.favorite, color: appColor.azul),
+                        ),
+                        const Text(
+                          '150+',
+                          style: TextStyle( color:Colors.white)
+                        ),
+                        const Text('Trabajos Hechos', style: TextStyle( color:Colors.white))
+                      ],
+                    ),
+                    
+                  ),
                 ),
                 Container(
                     decoration: const BoxDecoration(
