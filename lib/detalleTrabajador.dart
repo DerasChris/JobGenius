@@ -81,7 +81,7 @@ class _DetalleTrabajador extends State<DetalleTrabajador>{
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.asset(
-                                'armando_casas.jpg', 
+                                'armando_casas_1.jpg', 
                                 width: 50,
                               ),
                             )
@@ -358,7 +358,7 @@ class _DetalleTrabajador extends State<DetalleTrabajador>{
             Container(
               width: double.infinity,
               decoration: const BoxDecoration(
-                color: Colors.white,
+                color: Color(0xF2F2F2F2),
               ),
               child: Padding(
                 padding: const EdgeInsets.only(top: 8, bottom: 8, left: 40, right: 40),
