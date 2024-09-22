@@ -9,6 +9,7 @@ environment:
 dependencies:
   avatar_glow: ^3.0.1
   curved_navigation_bar: ^1.0.6
+  filter_list: ^1.0.3
   flutter:
     sdk: flutter
   flutter_custom_carousel: ^0.1.0+1
