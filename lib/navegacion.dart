@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:jobjenius/Busqueda.dart';
 import 'package:jobjenius/Trabajadores.dart';
 import 'package:jobjenius/seguridad.dart';
 import 'theme/app_color.dart';
@@ -18,10 +19,10 @@ class _NavigationState extends State<Navigation> {
 
   final Screens = [
     ModuloInicio(),
-     Seguridad(),
-      ModuloInicio(),
-       ModuloInicio(),
-        ModuloInicio(),
+    BusquedaTabajadores(),
+    ModuloInicio(),
+    Seguridad(),
+    ModuloInicio(),
 
   ];
 
