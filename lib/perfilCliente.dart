@@ -10,9 +10,7 @@ class Perfilcliente extends StatefulWidget {
 
 }
 
-void main() {
-  runApp(const Perfilcliente());
-}
+
 
 class _Perfilcliente extends State<Perfilcliente>{
   @override
@@ -26,7 +24,7 @@ class _Perfilcliente extends State<Perfilcliente>{
             child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 25, right: 25),
+                    padding: const EdgeInsets.only(top: 20, left: 25, right: 25),
                     child: Row(
                       children: <Widget>[
                         Row(
@@ -75,7 +73,7 @@ class _Perfilcliente extends State<Perfilcliente>{
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.asset(
-                            'chris.jpg', 
+                            'assets/chris.jpg', 
                             width: 50,
                           ),
                         )
@@ -90,7 +88,7 @@ class _Perfilcliente extends State<Perfilcliente>{
                           topRight: Radius.circular(50.0),
                         )
                       ), 
-                      //height: 100, 
+                      height: MediaQuery.of(context).size.height*100, 
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 30, left: 20, right: 20),
                         child: Column(

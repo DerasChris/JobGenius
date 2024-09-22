@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:jobjenius/detalleTrabajador.dart';
+import 'package:jobjenius/main.dart';
 
 class ListItemWidget extends StatelessWidget {
   const ListItemWidget({super.key});
@@ -8,35 +10,42 @@ class ListItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 160,
-      child: ListView.builder(
-        shrinkWrap: false,
-        scrollDirection: Axis.horizontal,
-        itemCount: _list.length,
-        padding: const EdgeInsets.only(left: 15,right: 15),
-        itemBuilder: (BuildContext context, int index) {
-          return  Padding(
-            padding: const EdgeInsets.only(left: 10, right: 15, top: 11),
-            child: Column(
-              children: [
-                Container(
-                  height: 100.0,
-                  width: 100.0,
-                  decoration: BoxDecoration(
-                    color: _list[index].color,
-                    borderRadius: BorderRadius.circular(10)
-                  ),
-                  child: Image.asset('assets/${_list[index].imagen}'),
-                ),
-                Text(
-                  _list[index].text,
-                ),
-                Text(
-                  _list[index].profesion
-                )
-              ],
-            ),
+      child: GestureDetector(
+         onTap: () {
+          navigatorKey.currentState?.push(
+            MaterialPageRoute(builder: (context) => const DetalleTrabajador()),
           );
-        } ,
+        },
+        child: ListView.builder(
+          shrinkWrap: false,
+          scrollDirection: Axis.horizontal,
+          itemCount: _list.length,
+          padding: const EdgeInsets.only(left: 15,right: 15),
+          itemBuilder: (BuildContext context, int index) {
+            return  Padding(
+              padding: const EdgeInsets.only(left: 10, right: 15, top: 11),
+              child: Column(
+                children: [
+                  Container(
+                    height: 100.0,
+                    width: 100.0,
+                    decoration: BoxDecoration(
+                      color: _list[index].color,
+                      borderRadius: BorderRadius.circular(10)
+                    ),
+                    child: Image.asset('assets/${_list[index].imagen}'),
+                  ),
+                  Text(
+                    _list[index].text,
+                  ),
+                  Text(
+                    _list[index].profesion
+                  )
+                ],
+              ),
+            );
+          } ,
+        ),
       ),
     );
   }

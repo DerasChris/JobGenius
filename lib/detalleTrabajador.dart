@@ -30,10 +30,12 @@ class _DetalleTrabajador extends State<DetalleTrabajador>{
                     children: [
                       
                       Padding(
-                          padding: const EdgeInsets.only(top: 10, left: 25, right: 25),
+                          padding: const EdgeInsets.only(top: 25, left: 25, right: 25),
                           child: Row(
                             children: <Widget>[
                               Row(
+                                 crossAxisAlignment: CrossAxisAlignment.center,
+                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
@@ -52,15 +54,10 @@ class _DetalleTrabajador extends State<DetalleTrabajador>{
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(width: 70,),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'Detalle del Trabajador',
-                                          style: Utils.poppins(20, FontWeight.normal, Colors.white),
-                                        ),
-                                      ],
+                                    SizedBox(width: 10,),
+                                    Text(
+                                      'Detalle del Trabajador',
+                                      style: Utils.poppins(20, FontWeight.normal, Colors.white),
                                     )
               
                                   ],
@@ -81,7 +78,7 @@ class _DetalleTrabajador extends State<DetalleTrabajador>{
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.asset(
-                                'armando_casas_1.jpg', 
+                                'assets/armando_casas_1.jpg', 
                                 width: 50,
                               ),
                             )
@@ -298,7 +295,7 @@ class _DetalleTrabajador extends State<DetalleTrabajador>{
                                           padding: const EdgeInsets.only(right: 10),
                                           child: ClipOval(
                                             child: Image.asset(
-                                              'usuario_a.jpg',
+                                              'assets/usuario_a.jpg',
                                               width: 50,
                                               fit: BoxFit.cover,
                                             ),

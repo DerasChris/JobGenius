@@ -18,7 +18,9 @@ class _BusquedaTabajadoresState extends State<BusquedaTabajadores> {
 
   void openFilterDialog() async {
     await FilterListDialog.display<Categorias>(
-       
+      
+      headlineText: 'Selecciona uno o mas items',
+      backgroundColor: appColor.azul,
       context,
       listData: categorias,
       selectedListData: categorias,
