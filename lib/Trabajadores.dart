@@ -12,10 +12,6 @@ class ModuloInicio extends StatefulWidget {
   State<ModuloInicio> createState() => _ModuloInicioState();
 }
 
-void main() {
-  runApp(const ModuloInicio());
-}
-
 class _ModuloInicioState extends State<ModuloInicio> {
   @override
   Widget build(BuildContext context) {
