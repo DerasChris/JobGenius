@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "326741051548",
+    "project_id": "jobgenius-52418",
+    "storage_bucket": "jobgenius-52418.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:326741051548:android:0a5f0957fc2f7b373e4559",
+        "android_client_info": {
+          "package_name": "com.example.jobjenius"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEWxo6kUkiZeDCoh6tbvSMuuY_NlJnD_0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
