@@ -15,7 +15,6 @@ class ModuloInicio extends StatefulWidget {
 class _ModuloInicioState extends State<ModuloInicio> {
   @override
   Widget build(BuildContext context) {
-    
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -37,26 +36,26 @@ class _ModuloInicioState extends State<ModuloInicio> {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    const SizedBox(width: 25,),
+                    const SizedBox(
+                      width: 25,
+                    ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            'Hey, Christian.',
-                            style: GoogleFonts.poppins(
+                      children: <Widget>[
+                        Text(
+                          'Hey, Christian.',
+                          style: GoogleFonts.poppins(
                               textStyle: const TextStyle(fontSize: 30),
-                              fontWeight: FontWeight.w600
-                            ),
-                          ),
-                          Text(
-                            'Comencemos..',
-                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w600),
+                        ),
+                        Text(
+                          'Comencemos..',
+                          style: GoogleFonts.poppins(
                               textStyle: const TextStyle(fontSize: 20),
-                              fontWeight: FontWeight.w600
-                            ),
-                          )
-                        ],
+                              fontWeight: FontWeight.w600),
+                        )
+                      ],
                     )
                   ],
                 ),
@@ -65,7 +64,7 @@ class _ModuloInicioState extends State<ModuloInicio> {
                 padding: EdgeInsets.only(top: 25, left: 25, right: 25),
                 child: SearchBarWidget(),
               ),
-               Row(
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
@@ -98,7 +97,7 @@ class _ModuloInicioState extends State<ModuloInicio> {
               Container(
                 child: CategoriaWidget(),
               ),
-               Row(
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -114,7 +113,9 @@ class _ModuloInicioState extends State<ModuloInicio> {
                 ],
               ),
               const Trabajadoreswidget(),
-              SizedBox(height: 80,)
+              SizedBox(
+                height: 80,
+              )
             ],
           ),
         ),
