@@ -92,10 +92,7 @@ class _perfilTrabajador extends State<perfilTrabajador>{
                         Container(
                             decoration: const BoxDecoration(
                               color: Color(0xF2F2F2F2),
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(50.0),
-                                topRight: Radius.circular(50.0),
-                              )
+                              borderRadius: BorderRadius.all(Radius.circular(50))
                             ), 
                             height: MediaQuery.of(context).size.height*0.5, 
                             child: Padding(
@@ -111,10 +108,13 @@ class _perfilTrabajador extends State<perfilTrabajador>{
                                           style: Utils.poppins(20, FontWeight.w600, Colors.black)
                                         ),
                                         Text(
+                                          "Albañil",
+                                          style: Utils.poppins(12, FontWeight.bold, Colors.black)
+                                        ),
+                                        Text(
                                           "armandoquito@gmail.com",
                                           style: Utils.poppins(12, FontWeight.normal, Colors.black)
                                         ),
-                                        
                                       ]
                                     ), 
                                   ),
@@ -289,11 +289,11 @@ class _perfilTrabajador extends State<perfilTrabajador>{
             ),
             Container(
               height: 120.0,
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 0, 51, 102),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30.0),
-                  topRight: Radius.circular(30.0),
+              decoration: BoxDecoration(
+                color: appColor.azul,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0),
                 ),
               ),
               child: Center(
