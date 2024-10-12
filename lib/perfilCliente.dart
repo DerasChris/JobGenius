@@ -88,7 +88,7 @@ class _Perfilcliente extends State<Perfilcliente>{
                           topRight: Radius.circular(50.0),
                         )
                       ), 
-                      height: MediaQuery.of(context).size.height*0.7, 
+                      height: MediaQuery.of(context).size.height*100, 
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 30, left: 20, right: 20),
                         child: Column(
