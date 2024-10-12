@@ -22,8 +22,8 @@ extension SafeTextExtension on Text {
               maxWidth: availableWidth,
             ),
             child: Text(
-              this.data!,
-              style: this.style?.copyWith(
+              data!,
+              style: style?.copyWith(
                         fontSize: maxFontSize,
                       ) ??
                   TextStyle(fontSize: maxFontSize),

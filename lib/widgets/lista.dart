@@ -66,7 +66,7 @@ class StyleModel {
 List<StyleModel> _list = [
   StyleModel(
     id: 1,
-    color: Color.fromARGB(255, 0, 51, 102),
+    color: const Color.fromARGB(255, 0, 51, 102),
      boxShadow: [
       const BoxShadow(
         color: Colors.black54,
@@ -81,7 +81,7 @@ List<StyleModel> _list = [
   ),
   StyleModel(
     id: 2,
-    color: Color.fromARGB(255, 0, 51, 102),
+    color: const Color.fromARGB(255, 0, 51, 102),
      boxShadow: [
       const BoxShadow(
         color: Colors.black54,
@@ -96,7 +96,7 @@ List<StyleModel> _list = [
   ),
   StyleModel(
     id: 3,
-    color: Color.fromARGB(255, 0, 51, 102),
+    color: const Color.fromARGB(255, 0, 51, 102),
      boxShadow: [
       const BoxShadow(
         color: Colors.black54,
@@ -111,7 +111,7 @@ List<StyleModel> _list = [
   ),
   StyleModel(
     id: 4,
-    color: Color.fromARGB(255, 0, 51, 102),
+    color: const Color.fromARGB(255, 0, 51, 102),
      boxShadow: [
       const BoxShadow(
         color: Colors.black54,

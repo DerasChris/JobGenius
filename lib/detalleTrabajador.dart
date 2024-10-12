@@ -54,7 +54,7 @@ class _DetalleTrabajador extends State<DetalleTrabajador>{
                                         ),
                                       ),
                                     ),
-                                    SizedBox(width: 10,),
+                                    const SizedBox(width: 10,),
                                     Text(
                                       'Detalle del Trabajador',
                                       style: Utils.poppins(20, FontWeight.normal, Colors.white),

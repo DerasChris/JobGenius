@@ -85,8 +85,8 @@ class _TrustedContactScreenState extends State<TrustedContactScreen> {
         onPressed: () {
           _mostrarDialogoAgregarContacto();
         },
-        child: const Icon(Icons.add),
         backgroundColor: appColor.amarillo,
+        child: const Icon(Icons.add),
       ),
     );
   }
