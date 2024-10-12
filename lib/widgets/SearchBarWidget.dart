@@ -25,7 +25,7 @@ class SearchBarWidget extends StatelessWidget {
               width: 35,
               height: 35,
               color: const Color.fromARGB(255, 255, 193, 7),
-              child: Icon(Icons.menu, size: 20,)
+              child: const Icon(Icons.menu, size: 20,)
               ),
           ),
           contentPadding: const EdgeInsets.symmetric(vertical: 15.0)

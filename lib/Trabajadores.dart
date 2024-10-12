@@ -95,7 +95,7 @@ class _ModuloInicioState extends State<ModuloInicio> {
                 ],
               ),
               Container(
-                child: CategoriaWidget(),
+                child: const CategoriaWidget(),
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,

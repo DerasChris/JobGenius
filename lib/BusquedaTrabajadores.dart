@@ -53,7 +53,7 @@ class _BusquedaTabajadoresState extends State<BusquedaTabajadores> {
                 style: Utils.poppins(18, FontWeight.w700, Colors.black),
               ),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             const Center(
               child: SearchBarWidget(),
             ),
@@ -62,7 +62,7 @@ class _BusquedaTabajadoresState extends State<BusquedaTabajadores> {
                 onTap: () {
                   openFilterDialog();
                 },
-                child: Icon(Icons.filter_alt,size: 30,)),
+                child: const Icon(Icons.filter_alt,size: 30,)),
               )
               ),
             Expanded(
@@ -102,7 +102,7 @@ class Busquedas {
 List<Busquedas> _busqueda = [
 Busquedas(
     id: 1,
-    color: Color.fromARGB(255, 0, 51, 102),
+    color: const Color.fromARGB(255, 0, 51, 102),
      boxShadow: [
       const BoxShadow(
         color: Colors.black54,
@@ -117,7 +117,7 @@ Busquedas(
   ),
  Busquedas(
     id: 2,
-    color: Color.fromARGB(255, 0, 51, 102),
+    color: const Color.fromARGB(255, 0, 51, 102),
      boxShadow: [
       const BoxShadow(
         color: Colors.black54,
@@ -132,7 +132,7 @@ Busquedas(
   ),
   Busquedas(
     id: 3,
-    color: Color.fromARGB(255, 0, 51, 102),
+    color: const Color.fromARGB(255, 0, 51, 102),
      boxShadow: [
       const BoxShadow(
         color: Colors.black54,
@@ -147,7 +147,7 @@ Busquedas(
   ),
   Busquedas(
     id: 4,
-    color: Color.fromARGB(255, 0, 51, 102),
+    color: const Color.fromARGB(255, 0, 51, 102),
      boxShadow: [
       const BoxShadow(
         color: Colors.black54,
@@ -162,7 +162,7 @@ Busquedas(
   ),
    Busquedas(
     id: 5,
-    color: Color.fromARGB(255, 0, 51, 102),
+    color: const Color.fromARGB(255, 0, 51, 102),
      boxShadow: [
       const BoxShadow(
         color: Colors.black54,
@@ -177,7 +177,7 @@ Busquedas(
   ),
    Busquedas(
     id: 6,
-    color: Color.fromARGB(255, 0, 51, 102),
+    color: const Color.fromARGB(255, 0, 51, 102),
      boxShadow: [
       const BoxShadow(
         color: Colors.black54,
@@ -193,7 +193,7 @@ Busquedas(
   ,
    Busquedas(
     id: 7,
-    color: Color.fromARGB(255, 0, 51, 102),
+    color: const Color.fromARGB(255, 0, 51, 102),
      boxShadow: [
       const BoxShadow(
         color: Colors.black54,

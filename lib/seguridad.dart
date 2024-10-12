@@ -131,13 +131,13 @@ class Seguridad extends StatelessWidget {
   Widget getScreenWidget(String screenName) {
     switch (screenName) {
       case 'ReportarProblema':
-        return SecurityProblemForm();
+        return const SecurityProblemForm();
       case 'Llamada911':
-        return EmergencyContactScreen();
+        return const EmergencyContactScreen();
       case 'ContactosSeguridad':
-        return TrustedContactScreen();
+        return const TrustedContactScreen();
       default:
-        return Scaffold(body: Center(child: Text('Pantalla no encontrada')));
+        return const Scaffold(body: Center(child: Text('Pantalla no encontrada')));
     }
   }
 }
