@@ -1,6 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:jobjenius/BusquedaTrabajadores.dart';
+import 'package:jobjenius/SolicitudTrabajo.dart';
 import 'package:jobjenius/Trabajadores.dart';
 import 'package:jobjenius/perfilCliente.dart';
 import 'package:jobjenius/seguridad.dart';
@@ -19,11 +20,11 @@ class _NavigationState extends State<Navigation> {
   int index =2;
 
   final Screens = [
-    const ModuloInicio(),
-    const BusquedaTabajadores(),
-    const ModuloInicio(),
-    const Seguridad(),
-    const Perfilcliente(),
+    SolicitudTrabajo(),
+    BusquedaTabajadores(),
+    ModuloInicio(),
+    Seguridad(),
+    Perfilcliente(),
 
   ];
 
@@ -38,9 +39,9 @@ class _NavigationState extends State<Navigation> {
   @override
   Widget build(BuildContext context) {
     final items = <Widget>[
-      buildIcon(Icons.home, 0),
+      buildIcon(Icons.add, 0),
       buildIcon(Icons.search, 1),
-      buildIcon(Icons.add, 2),
+      buildIcon(Icons.home, 2),
       buildIcon(Icons.settings, 3),
       buildIcon(Icons.person, 4),
     ];
