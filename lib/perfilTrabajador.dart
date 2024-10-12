@@ -82,7 +82,7 @@ class _perfilTrabajador extends State<perfilTrabajador>{
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: Image.asset(
-                                  'assets/chris.jpg', 
+                                  'assets/armando_casas_1.jpg', 
                                   width: 50,
                                 ),
                               )
