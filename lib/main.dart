@@ -26,8 +26,8 @@ class LoginWidget extends StatelessWidget {
           decoration: BoxDecoration(
               gradient: LinearGradient(begin: Alignment.topCenter, colors: [
             appColor.azul,
-            Color.fromARGB(207, 2, 48, 94),
-            Color.fromARGB(223, 3, 41, 80),
+            const Color.fromARGB(207, 2, 48, 94),
+            const Color.fromARGB(223, 3, 41, 80),
           ])),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,7 +36,7 @@ class LoginWidget extends StatelessWidget {
                 height: 80,
               ),
               Padding(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: FadeAnimatedWidget(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -71,10 +71,10 @@ class LoginWidget extends StatelessWidget {
                         topRight: Radius.circular(60)),
                   ),
                   child: Padding(
-                    padding: EdgeInsets.all(30),
+                    padding: const EdgeInsets.all(30),
                     child: Column(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 60,
                         ),
                         Column(

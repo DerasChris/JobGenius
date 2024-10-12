@@ -19,11 +19,11 @@ class _NavigationState extends State<Navigation> {
   int index =2;
 
   final Screens = [
-    ModuloInicio(),
-    BusquedaTabajadores(),
-    ModuloInicio(),
-    Seguridad(),
-    Perfilcliente(),
+    const ModuloInicio(),
+    const BusquedaTabajadores(),
+    const ModuloInicio(),
+    const Seguridad(),
+    const Perfilcliente(),
 
   ];
 
@@ -62,7 +62,7 @@ class _NavigationState extends State<Navigation> {
                     color: Colors.black.withOpacity(0.3),
                     spreadRadius: 1,
                     blurRadius: 10,
-                    offset: Offset(0, 3), // sombra hacia abajo
+                    offset: const Offset(0, 3), // sombra hacia abajo
                   ),
                 ],
               ),

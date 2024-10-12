@@ -20,7 +20,7 @@ class CategoriaWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Container(
-                  padding: EdgeInsets.all(2),
+                  padding: const EdgeInsets.all(2),
                   height: 60.0,
                   width: 60.0,
                   decoration: BoxDecoration(
@@ -55,7 +55,7 @@ class StyleModel {
 List<StyleModel> _list = [
   StyleModel(
     id: 1,
-    color: Color.fromARGB(255, 242, 245, 248),
+    color: const Color.fromARGB(255, 242, 245, 248),
      boxShadow: [
       const BoxShadow(
         color: Colors.black54,
@@ -69,7 +69,7 @@ List<StyleModel> _list = [
   ),
   StyleModel(
     id: 2,
-    color: Color.fromARGB(255, 242, 245, 248),
+    color: const Color.fromARGB(255, 242, 245, 248),
      boxShadow: [
       const BoxShadow(
         color: Colors.black54,
@@ -83,7 +83,7 @@ List<StyleModel> _list = [
   ),
   StyleModel(
     id: 3,
-    color: Color.fromARGB(255, 242, 245, 248),
+    color: const Color.fromARGB(255, 242, 245, 248),
      boxShadow: [
       const BoxShadow(
         color: Colors.black54,
@@ -97,7 +97,7 @@ List<StyleModel> _list = [
   ),
   StyleModel(
     id: 4,
-    color: Color.fromARGB(255, 242, 245, 248),
+    color: const Color.fromARGB(255, 242, 245, 248),
      boxShadow: [
       const BoxShadow(
         color: Colors.black54,
@@ -111,7 +111,7 @@ List<StyleModel> _list = [
   ),
   StyleModel(
     id: 5,
-    color: Color.fromARGB(255, 242, 245, 248),
+    color: const Color.fromARGB(255, 242, 245, 248),
      boxShadow: [
       const BoxShadow(
         color: Colors.black54,
@@ -125,7 +125,7 @@ List<StyleModel> _list = [
   ),
   StyleModel(
     id: 6,
-    color: Color.fromARGB(255, 242, 245, 248),
+    color: const Color.fromARGB(255, 242, 245, 248),
      boxShadow: [
       const BoxShadow(
         color: Colors.black54,
@@ -139,7 +139,7 @@ List<StyleModel> _list = [
   ),
   StyleModel(
     id: 7,
-    color: Color.fromARGB(255, 242, 245, 248),
+    color: const Color.fromARGB(255, 242, 245, 248),
      boxShadow: [
       const BoxShadow(
         color: Colors.black54,
@@ -153,7 +153,7 @@ List<StyleModel> _list = [
   ),
   StyleModel(
     id: 8,
-    color: Color.fromARGB(255, 242, 245, 248),
+    color: const Color.fromARGB(255, 242, 245, 248),
      boxShadow: [
       const BoxShadow(
         color: Colors.black54,

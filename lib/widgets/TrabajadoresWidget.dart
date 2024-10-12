@@ -20,7 +20,7 @@ class Trabajadoreswidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Container(
-                  padding: EdgeInsets.all(2),
+                  padding: const EdgeInsets.all(2),
                   height: 140.0,
                   width: 250.0,
                   decoration: BoxDecoration(
@@ -115,7 +115,7 @@ class StyleModel {
 List<StyleModel> _list = [
   StyleModel(
     id: 1,
-    color: Color.fromARGB(255, 0, 51, 102),
+    color: const Color.fromARGB(255, 0, 51, 102),
      boxShadow: [
       const BoxShadow(
         color: Colors.black54,
@@ -130,7 +130,7 @@ List<StyleModel> _list = [
   ),
   StyleModel(
     id: 2,
-    color: Color.fromARGB(255, 0, 51, 102),
+    color: const Color.fromARGB(255, 0, 51, 102),
      boxShadow: [
       const BoxShadow(
         color: Colors.black54,
@@ -145,7 +145,7 @@ List<StyleModel> _list = [
   ),
   StyleModel(
     id: 3,
-    color: Color.fromARGB(255, 0, 51, 102),
+    color: const Color.fromARGB(255, 0, 51, 102),
      boxShadow: [
       const BoxShadow(
         color: Colors.black54,

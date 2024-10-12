@@ -145,10 +145,11 @@ class _SecurityProblemFormState extends State<SecurityProblemForm> {
                   firstDate: DateTime(2000),
                   lastDate: DateTime.now(),
                 );
-                if (picked != null && picked != _fecha)
+                if (picked != null && picked != _fecha) {
                   setState(() {
                     _fecha = picked;
                   });
+                }
               },
             ),
             const SizedBox(height: 24),
