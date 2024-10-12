@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:jobjenius/theme/app_color.dart';
 import 'package:jobjenius/utils/utils.dart';
-import 'theme/app_color.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 
 class perfilTrabajador extends StatefulWidget {
