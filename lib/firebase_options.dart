@@ -59,4 +59,5 @@ class DefaultFirebaseOptions {
     projectId: 'jobgenius-52418',
     storageBucket: 'jobgenius-52418.appspot.com',
   );
+
 }
