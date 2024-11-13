@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jobjenius/extensions/SafeTextExtension.dart';
-import 'package:jobjenius/widgets/forms/SecurityProblemForm.dart';
+import 'package:jobjenius/frontendSolicitantes/forms/SecurityProblemForm.dart';
 import 'package:jobjenius/widgets/screens/EmergencyContactScreen.dart';
 import 'package:jobjenius/widgets/screens/TrustedContactScreen.dart';
 

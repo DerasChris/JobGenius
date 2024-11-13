@@ -3,9 +3,9 @@ import 'package:jobjenius/nomain.dart';
 import 'package:jobjenius/seguridad.dart';
 import 'package:jobjenius/theme/app_color.dart';
 import 'package:simple_animation_transition/simple_animation_transition.dart';
-import 'utils/utils.dart';
+import '../utils/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'logg.dart'; 
+import '../logg.dart'; // Asegúrate de importar la página principal
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jobjenius/frontendSolicitantes/feedTrabajos.dart';
+import 'package:jobjenius/frontendSolicitantes/navegacionSolicitantes.dart';
 
 
 void main() {
@@ -14,7 +15,7 @@ class Main extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: PaginaDeTrabajos(),
+      home: NavigationSolicitantes(),
     );
   }
 }
