@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:jobjenius/detalleTrabajador.dart';
-import 'package:jobjenius/main.dart';
+import 'package:jobjenius/mainxx.dart';
 
 class ListItemWidget extends StatelessWidget {
   const ListItemWidget({super.key});
