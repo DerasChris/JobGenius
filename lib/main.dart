@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:jobjenius/nomain.dart';
 import 'package:jobjenius/seguridad.dart';
@@ -5,10 +6,12 @@ import 'package:jobjenius/theme/app_color.dart';
 import 'package:simple_animation_transition/simple_animation_transition.dart';
 import 'utils/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'logg.dart'; 
+import 'logg.dart'; // Asegúrate de importar la página principal
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-void main() {
+Future<void> main() async {
+      WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const LoginWidget());
 }
 

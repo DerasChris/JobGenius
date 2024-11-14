@@ -16,7 +16,6 @@ class SolicitudTrabajo extends StatefulWidget {
 class _SolicitudTrabajoState extends State<SolicitudTrabajo> {
   List<SolicitudesCard> solicitudesCard = [
     SolicitudesCard(Icons.history,"Historial de solicitudes",true,Historial()),
-    SolicitudesCard(Icons.add,"Nueva solicitud",false,Nuevasolicitud()),
     SolicitudesCard(Icons.favorite,"Favoritos",false,Favoritos()),
     SolicitudesCard(Icons.assessment,"Estado de solicitudes",false,EstadoSolicitudes()),
   ];
@@ -29,7 +28,7 @@ class _SolicitudTrabajoState extends State<SolicitudTrabajo> {
           children: [
             Center(
               child: Text(
-                "Solicitud de trabajo",
+                "Detalles de trabajo solicitado",
                 style: Utils.poppins(20, FontWeight.bold, Colors.black),
                 ),
             ),
