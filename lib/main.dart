@@ -29,13 +29,8 @@ void main() async {
       projectId: "jobgenius-52418",
     ),
   );
-  
-import 'logg.dart'; // Asegúrate de importar la página principal
+}
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-Future<void> main() async {
-      WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
 
 class LoginWidget extends StatelessWidget {
   const LoginWidget({super.key});
