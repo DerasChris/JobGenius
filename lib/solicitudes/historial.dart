@@ -87,19 +87,36 @@ class _HistorialState extends State<Historial> {
                                     'Estado: '+solicitudes[index].estado,
                                     style: Utils.poppins(12, FontWeight.w700, Colors.black),
                                   ),
+                                  Text(
+                                    'Presupuesto estimado : \$'+solicitudes[index].presupuesto.toString(),
+                                    style: Utils.poppins(12, FontWeight.w700, Colors.black),
+                                  ),
                                 ],
                               ),
                             ),
 
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10.0), 
+                           ClipRRect(
+                              borderRadius: BorderRadius.circular(10.0),
                               child: Image.network(
                                 solicitudes[index].fotosProblema,
-                                width: 100, 
-                                height: 100, 
-                                fit: BoxFit.cover, 
+                                width: 100,
+                                height: 100,
+                                fit: BoxFit.cover,
+                                loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  } else {
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        value: loadingProgress.expectedTotalBytes != null
+                                            ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                                            : null,
+                                      ),
+                                    );
+                                  }
+                                },
                               ),
-                            ),
+                            )
 
                             ],
                           )

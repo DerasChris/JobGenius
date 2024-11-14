@@ -5,6 +5,8 @@ import 'package:jobjenius/APISERVICE/trabajador/trabajador_model.dart';
 import 'package:jobjenius/APISERVICE/trabajador/trabajador_service.dart';
 import 'package:jobjenius/APISERVICE/trabajador/usuario_model.dart';
 import 'package:jobjenius/APISERVICE/trabajador/usuario_service.dart';
+import 'package:jobjenius/detalleTrabajador.dart';
+import 'package:jobjenius/main.dart';
 import 'package:jobjenius/theme/app_color.dart';
 import 'package:jobjenius/utils/utils.dart';
 import 'package:jobjenius/widgets/SearchBarWidget.dart';
@@ -112,9 +114,20 @@ class _BusquedaTabajadoresState extends State<BusquedaTabajadores> {
                           Text('Tel:'+trabajadores[index].telefono,style: Utils.poppins(12, FontWeight.w700, Colors.black),),
                           Text('Dirección: '+trabajadores[index].ubicacion,style: Utils.poppins(12, FontWeight.w700, Colors.black),),
                           Text('Email '+trabajadores[index].email ,style: Utils.poppins(12, FontWeight.w700, Colors.black),),
+                          Text('ID '+trabajadores[index].firebaseUID ,style: Utils.poppins(12, FontWeight.w700, Colors.black),),
                         ],
                       ),
-                      trailing: const Icon(Icons.arrow_forward),
+                      trailing: GestureDetector(
+                        child: const Icon(Icons.arrow_forward),
+                        onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => DetalleTrabajador(trabajador: trabajadores[index].firebaseUID,),
+                                    ),
+                                  );
+                                }
+                        ),
                     ),
                   );
                 },

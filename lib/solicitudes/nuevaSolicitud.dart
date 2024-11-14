@@ -10,9 +10,11 @@ import 'package:jobjenius/APISERVICE/trabajador/post_model.dart';
 import 'package:jobjenius/APISERVICE/trabajador/service.dart';
 import 'package:jobjenius/theme/app_color.dart';
 import 'package:jobjenius/utils/utils.dart';
+import 'package:lottie/lottie.dart';
 
 class Nuevasolicitud extends StatefulWidget {
-  const Nuevasolicitud({super.key});
+  final String trabajador;
+  const Nuevasolicitud({super.key, required this.trabajador});
 
   @override
   State<Nuevasolicitud> createState() => _NuevasolicitudState();
@@ -22,7 +24,7 @@ class _NuevasolicitudState extends State<Nuevasolicitud> {
   final _formKey = GlobalKey<FormState>();
   final picker = ImagePicker();
   File? _image;
-  double _currentBudget = 50; // Valor inicial del slider
+  int _currentBudget = 50; // Valor inicial del slider
   // Controladores de los campos de texto
   TextEditingController nombreController = TextEditingController();
   TextEditingController telefonoController = TextEditingController();
@@ -106,6 +108,41 @@ class _NuevasolicitudState extends State<Nuevasolicitud> {
     }
   }
 
+  Future<void> _showMyDialog(String Contexto, String Motivo,String lottie) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Center(
+              child: Text(
+            Contexto,
+            textAlign: TextAlign.center,
+          )),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(Motivo, textAlign: TextAlign.center),
+                Lottie.network(
+                    repeat: false,
+                    lottie),
+                const Text('Ta bien?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Aceptar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   // Método para seleccionar fecha y hora
   Future<void> _selectDateTime(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
@@ -176,7 +213,8 @@ class _NuevasolicitudState extends State<Nuevasolicitud> {
               // Detalles del trabajo
               isLoading
               ?Center(child: CircularProgressIndicator())
-              :DropdownButtonFormField<String>(
+              :Text('Trabajador seleccionado: '+widget.trabajador),              
+              DropdownButtonFormField<String>(
                 value: tipoTrabajo,
                       items: categorias.map((Categoria categoria) {
                         return DropdownMenuItem<String>(
@@ -299,14 +337,14 @@ class _NuevasolicitudState extends State<Nuevasolicitud> {
                 style: TextStyle(fontSize: 18),
               ),
               Slider(
-                value: _currentBudget,
+                value: _currentBudget.toDouble(),
                 min: 0,
                 max: 500,
                 divisions: 100, // Número de divisiones en el slider
                 label: '\$${_currentBudget.round()}',
                 onChanged: (value) {
                   setState(() {
-                    _currentBudget = value;
+                    _currentBudget = value.toInt();
                   });
                 },
                 activeColor:
@@ -357,20 +395,21 @@ class _NuevasolicitudState extends State<Nuevasolicitud> {
                     // Crear un objeto Post con los datos del formulario
                     final newPost = Post(
                       usuarioId:'64b5f67a7a1f4625b9e8b001', // ID quemado del usuario
-                      trabajadorId:'64b5f67a7a1f4625b9e8b002', // ID quemado del trabajador
+                      trabajadorId:widget.trabajador, // ID quemado del trabajador
                       tipoTrabajo: tipoTrabajo!,
                       descripcionProblema: descripcionController.text,
                       nivelUrgencia: urgencia!,
                       fotosProblema: _imageUrl,
                       hora: "12:00",
                       fecha:  DateFormat('yyyy-MM-dd – kk:mm').format(fechaHora!),
-                      presupuesto:666,
+                      presupuesto:_currentBudget,
                       estado: 'pendiente', // Estado inicial
                     );
 
                     try {
                       // Llamar al servicio para crear el post
                       final result = await createPost(newPost);
+                      _showMyDialog("Datos Insertados!","Todo listo","https://lottie.host/896f0dee-64dd-45d8-bcc7-f87068364604/5MmfkpMVPA.json");
                       print('Formulario enviado: $result');
                       // Puedes mostrar un mensaje de éxito o navegar a otra pantalla
                     } catch (error) {

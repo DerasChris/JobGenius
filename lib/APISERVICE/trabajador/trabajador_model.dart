@@ -1,6 +1,4 @@
-// trabajador_model.dart
 class Trabajador {
-
   String usuarioId;
   String profesion;
   List<String> categorias;
@@ -9,7 +7,6 @@ class Trabajador {
   int cantidadTrabajosRealizados;
   int aniosExperiencia;
   String descripcion;
-
 
   Trabajador({
     required this.usuarioId,
@@ -20,7 +17,6 @@ class Trabajador {
     required this.cantidadTrabajosRealizados,
     required this.aniosExperiencia,
     required this.descripcion,
-
   });
 
   Map<String, dynamic> toJson() {
@@ -41,11 +37,31 @@ class Trabajador {
       usuarioId: json['usuarioId'],
       profesion: json['profesion'],
       categorias: List<String>.from(json['categorias']),
-      calificacion: double.parse(json['calificacion']['\$numberDouble']),
+      calificacion: _parseDouble(json['calificacion']),
       curriculum: json['curriculum'],
-      cantidadTrabajosRealizados: int.parse(json['cantidadTrabajosRealizados']['\$numberInt']),
-      aniosExperiencia: int.parse(json['aniosExperiencia']['\$numberInt']),
+      cantidadTrabajosRealizados: _parseInt(json['cantidadTrabajosRealizados']),
+      aniosExperiencia: _parseInt(json['aniosExperiencia']),
       descripcion: json['descripcion'],
     );
   }
+// Función para parsear el valor del campo calificacion
+static double _parseDouble(dynamic value) {
+  if (value is Map<String, dynamic> && value.containsKey("\$numberDouble")) {
+    return double.parse(value["\$numberDouble"]);
+  } else if (value is num) { // Si el valor es un número directamente
+    return value.toDouble();
+  }
+  return 0.0; // Valor por defecto si no se encuentra el campo o es incorrecto
+}
+
+// Función para parsear el valor de campos que contienen \$numberInt
+static int _parseInt(dynamic value) {
+  if (value is Map<String, dynamic> && value.containsKey("\$numberInt")) {
+    return int.parse(value["\$numberInt"]);
+  } else if (value is int) { // Si el valor es un número entero directamente
+    return value;
+  }
+  return 0; // Valor por defecto si no se encuentra el campo o es incorrecto
+}
+
 }

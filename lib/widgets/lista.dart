@@ -13,7 +13,7 @@ class ListItemWidget extends StatelessWidget {
       child: GestureDetector(
          onTap: () {
           navigatorKey.currentState?.push(
-            MaterialPageRoute(builder: (context) => const DetalleTrabajador()),
+            MaterialPageRoute(builder: (context) => const DetalleTrabajador(trabajador: 'aa',)),
           );
         },
         child: ListView.builder(

@@ -8,6 +8,7 @@ class Usuario {
   String rol;
   DateTime fechaRegistro;
   List<String> favoritos;
+  String url;
 
   Usuario({
     required this.id,
@@ -19,6 +20,7 @@ class Usuario {
     required this.rol,
     required this.fechaRegistro,
     required this.favoritos,
+    required this.url
   });
 
   // Método para convertir de JSON a objeto Usuario
@@ -34,6 +36,7 @@ class Usuario {
       fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
           int.parse(json['fechaRegistro']['\$date']['\$numberLong'])),
       favoritos: List<String>.from(json['favoritos']),
+      url: json['url']
     );
   }
 
@@ -53,6 +56,7 @@ class Usuario {
         }
       },
       'favoritos': favoritos,
+      'url':url
     };
   }
 }
