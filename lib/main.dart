@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jobjenius/nomain.dart';
 import 'package:jobjenius/seguridad.dart';
@@ -6,9 +8,26 @@ import 'package:simple_animation_transition/simple_animation_transition.dart';
 import 'utils/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'logg.dart'; 
+import 'package:jobjenius/nuevoUsuario.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-void main() {
+final GlobalKey<NuevoUsuarioState> newUserKey = GlobalKey<NuevoUsuarioState>();
+final FirebaseAuth _auth = FirebaseAuth.instance;
+
+/* void main() {
+  runApp(const LoginWidget());
+} */
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: "AIzaSyDEWxo6kUkiZeDCoh6tbvSMuuY_NlJnD_0",
+      appId: "1:326741051548:android:0a5f0957fc2f7b373e4559",
+      messagingSenderId: "2014753903439475296",
+      projectId: "jobgenius-52418",
+    ),
+  );
   runApp(const LoginWidget());
 }
 
@@ -17,8 +36,11 @@ class LoginWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final _emailController = TextEditingController();
+    final _passwordController = TextEditingController();
+
     return MaterialApp(
-      
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -93,8 +115,9 @@ class LoginWidget extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              child: const TextField(
-                                decoration: InputDecoration(
+                              child: TextField(
+                                controller: _emailController,
+                                decoration: const InputDecoration(
                                   hintText: "Usuario o celular",
                                   hintStyle: TextStyle(color: Colors.grey),
                                   border: InputBorder.none,
@@ -115,8 +138,9 @@ class LoginWidget extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              child: const TextField(
-                                decoration: InputDecoration(
+                              child: TextField(
+                                controller: _passwordController,
+                                decoration: const InputDecoration(
                                   hintText: "Contraseña",
                                   hintStyle: TextStyle(color: Colors.grey),
                                   border: InputBorder.none,
@@ -127,11 +151,22 @@ class LoginWidget extends StatelessWidget {
                             const Text('¿Olvidaste tu contraseña?', style: TextStyle(color: Colors.grey),),
                             const SizedBox(height: 40,),
                             GestureDetector(
-                              onTap: () {
-                                 navigatorKey.currentState?.push(
-                                  MaterialPageRoute(builder: (context) => const Main()),
-                                );
-                                
+                              onTap: ()  async {
+                                try {
+                                  final UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+                                    email: _emailController.text,
+                                    password: _passwordController.text,
+                                  );
+                                  navigatorKey.currentState?.push(
+                                    MaterialPageRoute(builder: (context) => const Main()),
+                                  );
+                                } on FirebaseAuthException catch (e) {
+                                  if (e.code == 'user-not-found') {
+                                    print('Usuario no Encontrado.');
+                                  } else if (e.code == 'wrong-password') {
+                                    print('Contraseña erronea.');
+                                  }
+                                }
                               },
                               child: Container(
                                 height: 50,
@@ -143,6 +178,40 @@ class LoginWidget extends StatelessWidget {
                                 child: Center(
                                   child: Text(
                                     'Iniciar Sesión',
+                                    style: Utils.poppins(18, FontWeight.w700, Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 40,),
+                            GestureDetector(
+                              onTap: () async {
+                                try {
+                                  final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+                                    email: _emailController.text,
+                                    password: _passwordController.text,
+                                  );
+                                  navigatorKey.currentState?.push(
+                                    MaterialPageRoute(builder: (context) => const Main()),
+                                  );
+                                } on FirebaseAuthException catch (e) {
+                                  if (e.code == 'weak-password') {
+                                    print('The password provided is too weak.');
+                                  } else if (e.code == 'email-already-in-use') {
+                                    print('Ya existe una cuenta con este correo.');
+                                  }
+                                }
+                              },
+                              child: Container(
+                                height: 50,
+                                margin: const EdgeInsets.symmetric(horizontal: 50),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: appColor.azul,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'Crear Cuenta',
                                     style: Utils.poppins(18, FontWeight.w700, Colors.white),
                                   ),
                                 ),
