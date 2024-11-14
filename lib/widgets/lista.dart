@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:jobjenius/detalleTrabajador.dart';
-import 'package:jobjenius/main.dart';
+import 'package:jobjenius/mainxx.dart';
 
 class ListItemWidget extends StatelessWidget {
   const ListItemWidget({super.key});
@@ -13,7 +13,7 @@ class ListItemWidget extends StatelessWidget {
       child: GestureDetector(
          onTap: () {
           navigatorKey.currentState?.push(
-            MaterialPageRoute(builder: (context) => const DetalleTrabajador()),
+            MaterialPageRoute(builder: (context) => const DetalleTrabajador(trabajador: 'aa',)),
           );
         },
         child: ListView.builder(

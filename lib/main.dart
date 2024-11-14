@@ -7,6 +7,7 @@ import 'package:jobjenius/theme/app_color.dart';
 import 'package:simple_animation_transition/simple_animation_transition.dart';
 import 'utils/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'logg.dart'; 
 import 'package:jobjenius/nuevoUsuario.dart';
 
@@ -28,8 +29,13 @@ void main() async {
       projectId: "jobgenius-52418",
     ),
   );
-  runApp(const LoginWidget());
-}
+  
+import 'logg.dart'; // Asegúrate de importar la página principal
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+Future<void> main() async {
+      WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 
 class LoginWidget extends StatelessWidget {
   const LoginWidget({super.key});
