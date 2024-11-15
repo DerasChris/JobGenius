@@ -1,26 +1,20 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:jobjenius/nomain.dart';
-import 'package:jobjenius/seguridad.dart';
 import 'package:jobjenius/theme/app_color.dart';
 import 'package:simple_animation_transition/simple_animation_transition.dart';
 import 'utils/utils.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import 'logg.dart'; 
-import 'package:jobjenius/nuevoUsuario.dart';
+import 'package:flutter/services.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-final GlobalKey<NuevoUsuarioState> newUserKey = GlobalKey<NuevoUsuarioState>();
 final FirebaseAuth _auth = FirebaseAuth.instance;
-
-/* void main() {
-  runApp(const LoginWidget());
-} */
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  ChannelBuffers channelBuffers = ChannelBuffers();
+  channelBuffers.resize('flutter/lifecycle', 10);
   await Firebase.initializeApp(
     options: const FirebaseOptions(
       apiKey: "AIzaSyDEWxo6kUkiZeDCoh6tbvSMuuY_NlJnD_0",
@@ -29,8 +23,9 @@ void main() async {
       projectId: "jobgenius-52418",
     ),
   );
-}
 
+  runApp(const LoginWidget());
+}
 
 class LoginWidget extends StatelessWidget {
   const LoginWidget({super.key});
@@ -197,9 +192,13 @@ class LoginWidget extends StatelessWidget {
                                   );
                                 } on FirebaseAuthException catch (e) {
                                   if (e.code == 'weak-password') {
-                                    print('The password provided is too weak.');
+                                    if (kDebugMode) {
+                                      print('The password provided is too weak.');
+                                    }
                                   } else if (e.code == 'email-already-in-use') {
-                                    print('Ya existe una cuenta con este correo.');
+                                    if (kDebugMode) {
+                                      print('Ya existe una cuenta con este correo.');
+                                    }
                                   }
                                 }
                               },
