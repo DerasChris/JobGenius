@@ -8,12 +8,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:jobjenius/APISERVICE/trabajador/usuario_model.dart';
 import 'package:jobjenius/APISERVICE/trabajador/usuario_service.dart';
 import 'package:jobjenius/logg.dart';
+import 'package:jobjenius/frontendSolicitantes/startpage.dart';
 import 'package:jobjenius/theme/app_color.dart';
 import 'package:jobjenius/utils/utils.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'frontendSolicitantes/startpage.dart';
+//import 'frontendSolicitantes/startpage.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -45,25 +46,43 @@ class _LoginWidgetState extends State<LoginWidget> {
   final _nombreCompletoController = TextEditingController();
   final _telefonoController = TextEditingController();
   final _ubicacionController = TextEditingController();
-  final _rolController = TextEditingController();
-  final _urlController = TextEditingController();
+/*   final _rolController = TextEditingController();
+  final _urlController = TextEditingController(); */
   final picker = ImagePicker();
   File? _image;
    String _imageUrl ="";
    String rol="";
+   List<Usuario> usuarios = []; 
+   bool isLoading = true; 
 
      Future<void> _pickImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-    setState(() async {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-        await _uploadImage(pickedFile);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
+      final pickedFile = await picker.pickImage(source: ImageSource.camera);
+      setState(() async {
+        if (pickedFile != null) {
+          _image = File(pickedFile.path);
+          await _uploadImage(pickedFile);
+        } else {
+          print('No image selected.');
+        }
+      });
+    }
 
+    //cargar rol
+    Future<void> getRolUser2(String id) async {
+      try {
+        List<Usuario> usuariosList = await getRolUser(id); // Llamada al servicio
+        print('Usuarios obtenidos: $usuariosList');
+        setState(() {
+          usuarios = usuariosList;
+          isLoading = false;
+        });
+      } catch (e) {
+        setState(() {
+          isLoading = false;
+        });
+        print('Error al cargar el rol: $e');
+      }
+    }
 
    void _login() async {
     if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
@@ -83,10 +102,31 @@ class _LoginWidgetState extends State<LoginWidget> {
         // Guardar el UID en SharedPreferences
         await saveUID(uid);
 
+        await getRolUser2(uid);
+
+        String rolU;
+        
+        if (usuarios.isNotEmpty) {
+          rolU = usuarios.single.rol;
+        } else {
+          print("Error: No se encontró ningún usuario con ese ID.");
+          return;
+        }
+
+
         // Navegar a la nueva pantalla (ejemplo: HomeScreen)
-         navigatorKey.currentState!.push(
-                                        MaterialPageRoute(builder: (context) => const ClientesLog()),
-                                      );
+        print('Llegó antes del if $rolU');
+        if (rolU == 'trabajador') {
+          print('entró a trabajador iniciar sesion');
+          navigatorKey.currentState!.push(
+            MaterialPageRoute(builder: (context) => const TrabajadoresLog()),
+          );
+        }else if(rolU == 'cliente'){
+          navigatorKey.currentState!.push(
+            MaterialPageRoute(builder: (context) => const ClientesLog()),
+          );
+
+        }
       } else {
         print("No se pudo obtener el UID del usuario.");
       }
@@ -298,7 +338,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   children: [
                                     DropdownButtonFormField<String>(
                                       value: rol.isNotEmpty ? rol : null,
-                                      items: [
+                                      items: const [
                                         DropdownMenuItem(
                                             value: 'cliente',
                                             child: Text('Cliente')),
@@ -333,20 +373,20 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     ),
                                   ],
                                 ),
-                                Text('Agregue su foto:'),
+                                const Text('Agregue su foto:'),
                                     _image == null
-                                        ? Text('No se ha seleccionado imagen.')
+                                        ? const Text('No se ha seleccionado imagen.')
                                         : Image.file(
                                             _image!,
                                             fit: BoxFit.contain,
                                           ),
                                     ElevatedButton(
                                       onPressed: _pickImage,
-                                      child: Text('Subir foto'),
                                       style: ElevatedButton.styleFrom(
                                           backgroundColor: appColor.azul,
                                           textStyle: Utils.poppins(14, FontWeight.bold, Colors.white),
                                           foregroundColor: Colors.white),
+                                      child: const Text('Subir foto'),
                                     ),
                               ],
                               const SizedBox(height: 40),
@@ -375,7 +415,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                         rol: rol,
                                         favoritos: ['Usuario'],
                                         url: _imageUrl
-                              );
+                                      );
                                       try {
                                       // Llamar al servicio para crear el post
                                       final result = await createUser(userData);
@@ -383,11 +423,18 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       saveUID(firebaseUID);
                                       // Puedes mostrar un mensaje de éxito o navegar a otra pantalla
                                     
-                                      navigatorKey.currentState!.push(
-                                        MaterialPageRoute(builder: (context) => const ClientesLog()),
-                                      );
-     
+                                    print('Llegó antes del if');
+                                      if (rol == 'trabajador') {
+                                        navigatorKey.currentState!.push(
+                                          MaterialPageRoute(builder: (context) => const TrabajadoresLog()),
+                                        );
+                                      }else if(rol == 'cliente'){
+                                        navigatorKey.currentState!.push(
+                                          MaterialPageRoute(builder: (context) => const ClientesLog()),
+                                        );
 
+                                      }
+     
                                     } catch (error) {
                                       print('Error al enviar el formulario: $error');
                                       // Muestra un mensaje de error

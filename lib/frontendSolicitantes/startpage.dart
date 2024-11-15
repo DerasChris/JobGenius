@@ -11,8 +11,8 @@ Future<void> main() async {
 }
  */
 
-class Main extends StatelessWidget {
-  const Main({super.key});
+class TrabajadoresLog extends StatelessWidget {
+  const TrabajadoresLog({super.key});
 
   @override
   Widget build(BuildContext context) {

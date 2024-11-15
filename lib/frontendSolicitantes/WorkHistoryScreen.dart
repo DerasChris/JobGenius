@@ -4,7 +4,7 @@ import 'package:jobjenius/extensions/SafeNavigationExtension.dart';
 import 'package:jobjenius/theme/app_color.dart';
 
 class WorkHistoryView extends StatelessWidget {
-  const WorkHistoryView({Key? key}) : super(key: key);
+  const WorkHistoryView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -72,82 +72,84 @@ class WorkHistoryView extends StatelessWidget {
     bool isFirst = false,
     bool isLast = false,
   }) {
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
-            children: [
-              if (!isFirst)
-                const Expanded(
-                  child: VerticalDivider(
-                    color: Colors.grey,
-                    thickness: 2,
-                  ),
-                ),
-              Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: appColor.azul,
-                ),
-                padding: const EdgeInsets.all(8),
-                child: Icon(icon, color: Colors.white),
-              ),
-              if (!isLast)
-                const Expanded(
-                  child: VerticalDivider(
-                    color: Colors.grey,
-                    thickness: 2,
-                  ),
-                ),
-            ],
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Card(
-              elevation: 2,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(title,
-                        style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w800,
-                          color: Colors.black,
-                        )),
-                    const SizedBox(height: 4),
-                    Text(company,
-                        style: GoogleFonts.poppins(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black,
-                        )),
-                    const SizedBox(height: 4),
-                    Text(
-                      period,
-                      style: GoogleFonts.poppins(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                      ),
+    return SizedBox(
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              children: [
+                if (!isFirst)
+                  const Expanded(
+                    child: VerticalDivider(
+                      color: Colors.grey,
+                      thickness: 2,
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      description,
-                      style: GoogleFonts.poppins(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black,
-                      ),
+                  ),
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: appColor.azul,
+                  ),
+                  padding: const EdgeInsets.all(8),
+                  child: Icon(icon, color: Colors.white),
+                ),
+                if (!isLast)
+                  const Expanded(
+                    child: VerticalDivider(
+                      color: Colors.grey,
+                      thickness: 2,
                     ),
-                  ],
+                  ),
+              ],
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Card(
+                elevation: 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(title,
+                          style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.black,
+                          )),
+                      const SizedBox(height: 4),
+                      Text(company,
+                          style: GoogleFonts.poppins(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
+                          )),
+                      const SizedBox(height: 4),
+                      Text(
+                        period,
+                        style: GoogleFonts.poppins(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        description,
+                        style: GoogleFonts.poppins(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

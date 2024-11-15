@@ -139,47 +139,53 @@ class _PaginaDeTrabajosState extends State<PaginaDeTrabajos> {
           Expanded(
             child: Container(
               color: appColor.fondo, 
-              child: ListView.builder(
-                itemCount: trabajosFiltrados.length,
-                itemBuilder: (context, index) {
-                  final trabajo = trabajosFiltrados[index];
-                  return Card(
-                    color: appColor.azul, 
-                    margin: const EdgeInsets.only(bottom: 16),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            trabajo['titulo']!,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            trabajo['descripcion']!,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                          const SizedBox(height: 8),
-                          ElevatedButton(
-                            onPressed: () {
-                              
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: appColor.amarillo, 
-                              foregroundColor: Colors.black, 
-                            ),
-                            child: const Text('Contactar'),
-                          ),
-                        ],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: ListView.builder(
+                  itemCount: trabajosFiltrados.length,
+                  itemBuilder: (context, index) {
+                    final trabajo = trabajosFiltrados[index];
+                    return Card(
+                      color: appColor.azul, 
+                      margin: const EdgeInsets.only(bottom: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0), 
                       ),
-                    ),
-                  );
-                },
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              trabajo['titulo']!,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              trabajo['descripcion']!,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            const SizedBox(height: 8),
+                            ElevatedButton(
+                              onPressed: () {
+                                
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: appColor.amarillo, 
+                                foregroundColor: Colors.black, 
+                              ),
+                              child: const Text('Contactar'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ),

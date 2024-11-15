@@ -23,7 +23,6 @@ Future<String> createPost(Post post) async {
   }
 }
 
-
 Future<List<Post>> getSolicitudes(String id) async {
   final response = await http.get(
     Uri.parse('$solicitudesuser/$id'),
