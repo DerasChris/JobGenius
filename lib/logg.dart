@@ -3,8 +3,8 @@ import 'package:jobjenius/navegacion.dart';
 
 
 
-class Main extends StatelessWidget {
-  const Main({super.key});
+class ClientesLog extends StatelessWidget {
+  const ClientesLog({super.key});
 
   @override
   Widget build(BuildContext context) {
