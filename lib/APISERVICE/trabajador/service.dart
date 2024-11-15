@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'post_model.dart';
 
-const String baseUrl = 'https://eagle-clever-lately.ngrok-free.app/solicitudes';  // Reemplaza con tu URL de API
-const String solicitudesuser = 'https://eagle-clever-lately.ngrok-free.app/solicitudes-por-usuario'; 
+const String baseUrl = 'https://mondongodb-lara.aclx8p.easypanel.host/solicitudes';  // Reemplaza con tu URL de API
+const String solicitudesuser = 'https://mondongodb-lara.aclx8p.easypanel.host/solicitudes-por-usuario'; 
 
 Future<String> createPost(Post post) async {
   final response = await http.post(

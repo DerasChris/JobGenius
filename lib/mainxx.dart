@@ -129,7 +129,7 @@ class LoginWidget extends StatelessWidget {
                             GestureDetector(
                               onTap: () {
                                  navigatorKey.currentState?.push(
-                                  MaterialPageRoute(builder: (context) => const Main()),
+                                  MaterialPageRoute(builder: (context) => const ClientesLog()),
                                 );
                                 
                               },

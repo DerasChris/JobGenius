@@ -6,7 +6,7 @@ import 'package:jobjenius/APISERVICE/trabajador/trabajador_model.dart';
 import 'package:jobjenius/APISERVICE/trabajador/usuario_model.dart';
 
 
-const String baseUrl = 'https://eagle-clever-lately.ngrok-free.app';  // Reemplaza con tu URL de API
+const String baseUrl = 'https://mondongodb-lara.aclx8p.easypanel.host';  // Reemplaza con tu URL de API
 
 // Servicio para obtener las categorías de oficios
 Future<List<Usuario>> getUser() async {
@@ -24,5 +24,22 @@ Future<List<Usuario>> getUser() async {
     print("funca");
   } else {
     throw Exception('Error al obtener los trabajadores');
+  }
+}
+
+Future<String> createUser(Usuario post) async {
+  final response = await http.post(
+    Uri.parse('$baseUrl/usuario-add'),
+    headers: {"Content-Type": "application/json"},
+    body: json.encode(post.toJson()),
+  );
+
+  print('Código de respuesta: ${response.statusCode}');
+    print('Respuesta del servidor: ${response.body}');
+
+  if (response.statusCode == 200) {
+    return 'Creado con exito la solicitud..!';
+  } else {
+    throw Exception('Error al crear el post');
   }
 }

@@ -43,7 +43,6 @@ class Usuario {
   // Método para convertir de objeto Usuario a JSON
   Map<String, dynamic> toJson() {
     return {
-      '_id': id,
       'firebaseUID': firebaseUID,
       'nombreCompleto': nombreCompleto,
       'email': email,

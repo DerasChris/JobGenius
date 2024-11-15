@@ -11,6 +11,7 @@ import 'package:jobjenius/APISERVICE/trabajador/service.dart';
 import 'package:jobjenius/theme/app_color.dart';
 import 'package:jobjenius/utils/utils.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Nuevasolicitud extends StatefulWidget {
   final String trabajador;
@@ -46,6 +47,11 @@ class _NuevasolicitudState extends State<Nuevasolicitud> {
     super.initState();
     _loadCategorias(); 
   }
+
+Future<String?> getUID() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString('firebaseUID');
+} 
 
   // Método para seleccionar imagen
   Future<void> _pickImage() async {
@@ -393,8 +399,10 @@ class _NuevasolicitudState extends State<Nuevasolicitud> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     // Crear un objeto Post con los datos del formulario
+                    final String? uid = await getUID();
                     final newPost = Post(
-                      usuarioId:'64b5f67a7a1f4625b9e8b001', // ID quemado del usuario
+                      usuarioId:uid??'',
+                      // ID quemado del usuario
                       trabajadorId:widget.trabajador, // ID quemado del trabajador
                       tipoTrabajo: tipoTrabajo!,
                       descripcionProblema: descripcionController.text,
@@ -415,6 +423,7 @@ class _NuevasolicitudState extends State<Nuevasolicitud> {
                     } catch (error) {
                       print('Error al enviar el formulario: $error');
                       // Muestra un mensaje de error
+                      print(uid);
                     }
                   }
                 },

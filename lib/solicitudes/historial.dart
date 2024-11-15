@@ -3,6 +3,7 @@ import 'package:jobjenius/APISERVICE/trabajador/post_model.dart';
 import 'package:jobjenius/APISERVICE/trabajador/service.dart';
 import 'package:jobjenius/theme/app_color.dart';
 import 'package:jobjenius/utils/utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Historial extends StatefulWidget {
   const Historial({super.key});
@@ -25,11 +26,15 @@ class _HistorialState extends State<Historial> {
   List<Post> solicitudes = []; 
   bool isLoading = true; 
 
-  
+Future<String?> getUID() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString('firebaseUID');
+}  
 
  Future<void> _loadSolicitudes() async {
     try {
-      List<Post> solicitudesList = await getSolicitudes("64b5f67a7a1f4625b9e8b001"); // Llamada al servicio
+      final String? uid = await getUID();
+      List<Post> solicitudesList = await getSolicitudes(uid!); // Llamada al servicio
       setState(() {
         solicitudes = solicitudesList;
         isLoading = false; // Detener la carga una vez que los datos se han obtenido

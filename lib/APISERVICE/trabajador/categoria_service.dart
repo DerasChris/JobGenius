@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:jobjenius/APISERVICE/trabajador/categoria_model.dart';
 
 
-const String baseUrl = 'https://eagle-clever-lately.ngrok-free.app';  // Reemplaza con tu URL de API
+const String baseUrl = 'https://mondongodb-lara.aclx8p.easypanel.host';  // Reemplaza con tu URL de API
 
 // Servicio para obtener las categorías de oficios
 Future<List<Categoria>> getCategorias() async {
