@@ -1,11 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:jobjenius/frontendSolicitantes/feedTrabajos.dart';
+import 'package:jobjenius/frontendSolicitantes/navegacionSolicitantes.dart';
 
-
-void main() {
+/* 
+Future<void> main() async {
+    WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const Main());
 }
-
+ */
 
 class Main extends StatelessWidget {
   const Main({super.key});
@@ -14,7 +18,7 @@ class Main extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: PaginaDeTrabajos(),
+      home: NavigationSolicitantes(),
     );
   }
 }

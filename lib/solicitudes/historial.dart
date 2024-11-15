@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:jobjenius/APISERVICE/trabajador/post_model.dart';
+import 'package:jobjenius/APISERVICE/trabajador/service.dart';
 import 'package:jobjenius/theme/app_color.dart';
 import 'package:jobjenius/utils/utils.dart';
 
@@ -7,48 +9,118 @@ class Historial extends StatefulWidget {
 
   @override
   State<Historial> createState() => _HistorialState();
+
+  
 }
 
 class _HistorialState extends State<Historial> {
+
+@override
+   void initState() {
+    super.initState();
+    _loadSolicitudes(); 
+  }
+
+
+  List<Post> solicitudes = []; 
+  bool isLoading = true; 
+
+  
+
+ Future<void> _loadSolicitudes() async {
+    try {
+      List<Post> solicitudesList = await getSolicitudes("64b5f67a7a1f4625b9e8b001"); // Llamada al servicio
+      setState(() {
+        solicitudes = solicitudesList;
+        isLoading = false; // Detener la carga una vez que los datos se han obtenido
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      print('Error al cargar las categorías: $e');
+      print(solicitudes);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Historial"),
       ),
-      body: Center(
-        child: Padding(
+      body: 
+      isLoading
+      ?const Center(child: CircularProgressIndicator())
+        :Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
             children: [
               Expanded(
                 child: ListView.builder(
-                  itemCount: _busqueda.length,
+                  itemCount: solicitudes.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Card(
-                      child: ListTile(
-                        leading: const Icon(
-                          Icons.history
-                        ),
-                        title: Text(
-                          _busqueda[index].trabajo,
-                          style: Utils.poppins(14, FontWeight.w700, Colors.black),
-                        ),
-                        subtitle: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ListTile(
+                          title: Text(
+                            'Descripción: '+solicitudes[index].descripcionProblema,
+                            style: Utils.poppins(14, FontWeight.w700, Colors.black),
+                          ),
+                          subtitle: Row(
                           children: [
-                            Text(
-                              _busqueda[index].fechaSolicitada,
-                              style: Utils.poppins(12, FontWeight.w700, Colors.black),
+                            Expanded(
+                              flex: 2,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Fecha: '+solicitudes[index].fecha,
+                                    style: Utils.poppins(12, FontWeight.w700, Colors.black),
+                                  ),
+                                  Text(
+                                    'Urgencia: '+solicitudes[index].nivelUrgencia,
+                                    style: Utils.poppins(12, FontWeight.w700, Colors.black),
+                                  ),
+                                  Text(
+                                    'Estado: '+solicitudes[index].estado,
+                                    style: Utils.poppins(12, FontWeight.w700, Colors.black),
+                                  ),
+                                  Text(
+                                    'Presupuesto estimado : \$'+solicitudes[index].presupuesto.toString(),
+                                    style: Utils.poppins(12, FontWeight.w700, Colors.black),
+                                  ),
+                                ],
+                              ),
                             ),
-                             Text(
-                              _busqueda[index].aprobada ? "Estado: Aprobada": "Estado: Pendiente",
-                              style: Utils.poppins(12, FontWeight.w700, Colors.black),
-                            ),
-                          ],
+
+                           ClipRRect(
+                              borderRadius: BorderRadius.circular(10.0),
+                              child: Image.network(
+                                solicitudes[index].fotosProblema,
+                                width: 100,
+                                height: 100,
+                                fit: BoxFit.cover,
+                                loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  } else {
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        value: loadingProgress.expectedTotalBytes != null
+                                            ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                                            : null,
+                                      ),
+                                    );
+                                  }
+                                },
+                              ),
+                            )
+
+                            ],
+                          )
                         ),
-                        trailing: const Icon(Icons.remove_red_eye_rounded),
                       ),
                     );
                   },
@@ -57,95 +129,6 @@ class _HistorialState extends State<Historial> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }
-
-class Historiales {
-  final int id;
-  final Color color;
-  final List<BoxShadow> boxShadow;
-  final String trabajo;
-  final String fechaSolicitada;
-  final bool aprobada;
-  final String descripcion;
-
-
-  Historiales(
-      {required this.id,
-      required this.color,
-      required this.boxShadow,
-      required this.trabajo,
-      required this.fechaSolicitada,
-      required this.aprobada,
-      required this.descripcion,
-      });
-}
-
-List<Historiales> _busqueda = [
-  Historiales(
-      id: 1,
-      color: appColor.azul,
-      boxShadow: [
-      const BoxShadow(
-        color: Colors.black54,
-        blurRadius: 5.0,
-        spreadRadius: 9.00,
-        offset: Offset(3.0,5.8)
-      )
-      ],
-      trabajo: "Cambio de chapa de puerta",
-      fechaSolicitada: "12/12/2024 5:00",
-      aprobada: true,
-      descripcion: "Chapa en mal estado por el uso",
-  ),
-  Historiales(
-      id: 2,
-      color: appColor.azul,
-      boxShadow: [
-      const BoxShadow(
-        color: Colors.black54,
-        blurRadius: 5.0,
-        spreadRadius: 9.00,
-        offset: Offset(3.0,5.8)
-      )
-      ],
-      trabajo: "Minjitorio tapado",
-      fechaSolicitada: "12/12/2024 5:00",
-      aprobada: true,
-      descripcion: "Minjitorio en mal estado por el uso",
-  ),
-  Historiales(
-      id: 3,
-      color: appColor.azul,
-      boxShadow: [
-      const BoxShadow(
-        color: Colors.black54,
-        blurRadius: 5.0,
-        spreadRadius: 9.00,
-        offset: Offset(3.0,5.8)
-      )
-      ],
-      trabajo: "Cambio de cerradura de puerta",
-      fechaSolicitada: "12/12/2024 5:00",
-      aprobada: true,
-      descripcion: "Chapa en mal estado por el uso",
-  ),
-  Historiales(
-      id: 4,
-      color: appColor.azul,
-      boxShadow: [
-      const BoxShadow(
-        color: Colors.black54,
-        blurRadius: 5.0,
-        spreadRadius: 9.00,
-        offset: Offset(3.0,5.8)
-      )
-      ],
-      trabajo: "Cambio de chapa de puerta",
-      fechaSolicitada: "12/12/2024 5:00",
-      aprobada: true,
-      descripcion: "Chapa en mal estado por el uso",
-  ),
-];
