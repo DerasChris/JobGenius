@@ -43,3 +43,29 @@ Future<String> createUser(Usuario post) async {
     throw Exception('Error al crear el post');
   }
 }
+
+// Servicio para obtener el rol de usuario
+Future<List<Usuario>> getRolUser(String id) async {
+  final response = await http.get(
+    Uri.parse('$baseUrl/usuario/$id'),
+    headers: {"Content-Type": "application/json"},
+  );
+
+  print('Código de respuesta: ${response.statusCode}');
+  print('Respuesta del servidor: ${response.body}');
+
+  if (response.statusCode == 200) {
+    Map<String, dynamic> data = json.decode(response.body);
+
+    // Aquí verificamos si la respuesta es un solo usuario
+    if (data.isNotEmpty) {
+      Usuario usuario = Usuario.fromJson(data);
+      return [usuario]; // Retorna una lista con un solo usuario
+    } else {
+      print("El objeto de usuario está vacío.");
+      return [];
+    }
+  } else {
+    throw Exception('Error al obtener el usuario');
+  }
+}

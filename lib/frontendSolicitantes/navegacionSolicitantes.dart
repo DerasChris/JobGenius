@@ -19,10 +19,9 @@ class NavigationSolicitantes extends StatefulWidget {
 }
 
 
-
 class _NavigationState extends State<NavigationSolicitantes> {
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
-  int index =2;
+  int index =1;
 
   final Screens = [
     PantallaDeVoz(),
