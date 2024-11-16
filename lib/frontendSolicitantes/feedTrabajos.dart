@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:jobjenius/theme/app_color.dart';
+import 'package:jobjenius/APISERVICE/trabajador/post_model.dart';
+import 'package:jobjenius/APISERVICE/trabajador/service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jobjenius/VistaTrabajador.dart';
 
 class PaginaDeTrabajos extends StatefulWidget {
   const PaginaDeTrabajos({super.key});
@@ -9,9 +13,42 @@ class PaginaDeTrabajos extends StatefulWidget {
 }
 
 class _PaginaDeTrabajosState extends State<PaginaDeTrabajos> {
+
+  @override
+   void initState() {
+    super.initState();
+    _loadSolicitudesT(); 
+  }
+
+
+  List<Post> solicitudes = []; 
+  bool isLoading = true; 
+
+  Future<String?> getUID() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('firebaseUID');
+  }  
+
+  Future<void> _loadSolicitudesT() async {
+    try {
+      final String? uid = await getUID();
+      List<Post> solicitudesList = await getSolicitudesTrab(uid!); // Llamada al servicio
+      setState(() {
+        solicitudes = solicitudesList;
+        isLoading = false; // Detener la carga una vez que los datos se han obtenido
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      print('Error al cargar las categorías: $e');
+      print(solicitudes);
+    }
+  }
+
   String etiquetaSeleccionada = 'Todos';
 
-  final List<Map<String, String>> trabajos = [
+  /* final List<Map<String, String>> trabajos = [
     {
       'titulo': 'Albañil (Trabajo Eventual)',
       'descripcion': 'Quiero hacer un muro en mi casa, ¿Algún albañil? Soy de San Salvador. Pago por obra.',
@@ -78,12 +115,13 @@ class _PaginaDeTrabajosState extends State<PaginaDeTrabajos> {
       'etiqueta': 'Fontanero',
     },
   ];
-
+ */
+  
   @override
   Widget build(BuildContext context) {
-    List<Map<String, String>> trabajosFiltrados = etiquetaSeleccionada == 'Todos'
-        ? trabajos
-        : trabajos.where((trabajo) => trabajo['etiqueta'] == etiquetaSeleccionada).toList();
+    /* List<Map<String, String>> trabajosFiltrados = (etiquetaSeleccionada == 'Todos'
+        ? solicitudes
+        : solicitudes.where((solicitudes) => solicitudes.tipoTrabajo == etiquetaSeleccionada).toList()).cast<Map<String, String>>(); */
 
     return Scaffold(
       backgroundColor: appColor.fondo, 
@@ -101,7 +139,7 @@ class _PaginaDeTrabajosState extends State<PaginaDeTrabajos> {
       ),
       body: Column(
         children: [
-          Container(
+          /* Container(
             color: appColor.fondo, 
             child: Padding(
               padding: const EdgeInsets.only(top: 25, left: 25, right: 25),
@@ -126,15 +164,15 @@ class _PaginaDeTrabajosState extends State<PaginaDeTrabajos> {
                       );
                     }).toList(),
                     onChanged: (String? newValue) {
-                      setState(() {
+                      /* setState(() {
                         etiquetaSeleccionada = newValue!;
-                      });
+                      }); */
                     },
                   ),
                 ),
               ),
             ),
-          ),
+          ), */
           const SizedBox(height: 20),
           Expanded(
             child: Container(
@@ -142,9 +180,9 @@ class _PaginaDeTrabajosState extends State<PaginaDeTrabajos> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: ListView.builder(
-                  itemCount: trabajosFiltrados.length,
-                  itemBuilder: (context, index) {
-                    final trabajo = trabajosFiltrados[index];
+                  itemCount: solicitudes.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    //final trabajo = trabajosFiltrados[index];
                     return Card(
                       color: appColor.azul, 
                       margin: const EdgeInsets.only(bottom: 16),
@@ -157,7 +195,7 @@ class _PaginaDeTrabajosState extends State<PaginaDeTrabajos> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              trabajo['titulo']!,
+                              solicitudes[index].tipoTrabajo,
                               style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -166,13 +204,34 @@ class _PaginaDeTrabajosState extends State<PaginaDeTrabajos> {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              trabajo['descripcion']!,
+                              solicitudes[index].descripcionProblema,
                               style: const TextStyle(color: Colors.white),
                             ),
                             const SizedBox(height: 8),
                             ElevatedButton(
                               onPressed: () {
                                 
+                                  // Crear la solicitud con los datos del formulario
+                                  /* final solicitud = SolicitudTrabajo(
+                                    nombre: solicitudes[index].trabajadorId,
+                                    telefono: solicitudes[index].usuarioId,
+                                    ubicacion: solicitudes[index].descripcionProblema,
+                                    tipoTrabajo: solicitudes[index].tipoTrabajo,
+                                    descripcion: solicitudes[index].descripcionProblema,
+                                    urgencia: solicitudes[index].nivelUrgencia,
+                                    fechaHora: solicitudes[index].fecha,
+                                    presupuesto: solicitudes[index].presupuesto,
+                                    metodoPago: solicitudes[index].estado,
+                                    imagenPath: solicitudes[index].fotosProblema);
+                                
+                                
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        Vistatrabajador(solicitud: solicitud),
+                                  ),
+                                ); */
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: appColor.amarillo, 
