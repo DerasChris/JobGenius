@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:jobjenius/theme/app_color.dart';
 import 'package:jobjenius/utils/utils.dart';
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jobjenius/main.dart';
 
 class perfilTrabajador extends StatefulWidget {
 	const perfilTrabajador({super.key});
@@ -18,6 +20,13 @@ void main() {
 class _perfilTrabajador extends State<perfilTrabajador>{
 
   bool _isAnimating = false;
+
+  Future<void> deleteUID() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey('firebaseUID')) {
+      await prefs.remove('firebaseUID');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +107,7 @@ class _perfilTrabajador extends State<perfilTrabajador>{
                                   topRight: Radius.circular(50.0),
                                 ),
                               ), 
-                              height: MediaQuery.of(context).size.height*0.55, 
+                              height: MediaQuery.of(context).size.height*0.67, 
                               child: Padding(
                                 padding: const EdgeInsets.only(bottom: 30, left: 20, right: 20),
                                 child: Column(
@@ -278,6 +287,65 @@ class _perfilTrabajador extends State<perfilTrabajador>{
                                                 ),
                                                 
                                               ],
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(15),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    decoration: const BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius: BorderRadius.all(Radius.circular(20))
+                                                    ),
+                                                    child: Row(
+                                                      children: <Widget>[
+                                                        Padding(
+                                                          padding: const EdgeInsets.all(8.0),
+                                                          child: Container(
+                                                            width: 50,
+                                                            height: 50,
+                                                            decoration: BoxDecoration(
+                                                              color: appColor.amarillo,
+                                                              shape: BoxShape.circle, 
+                                                            ),
+                                                            child: ClipOval(
+                                                              child: Icon(
+                                                                Icons.logout, 
+                                                                color: appColor.azul,
+                                                                size: 30,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding: const EdgeInsets.only(left: 15, right: 15),
+                                                          child: Text(
+                                                            'Cerrar Sesión', 
+                                                            style: Utils.poppins(15, FontWeight.normal, appColor.azul)
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding: const EdgeInsets.all(8.0),
+                                                          child: Icon(
+                                                            Icons.arrow_forward_ios, 
+                                                            color: appColor.azul,
+                                                          ),
+                                                        ),
+                                                        
+                                                      ],
+                                                      
+                                                    ),
+                                              
+                                                  ),
+                                                  
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ],

@@ -102,6 +102,8 @@ class _LoginWidgetState extends State<LoginWidget> {
         // Guardar el UID en SharedPreferences
         await saveUID(uid);
 
+        print('uid:'+uid);
+
         await getRolUser2(uid);
 
         String rolU;
@@ -112,7 +114,6 @@ class _LoginWidgetState extends State<LoginWidget> {
           print("Error: No se encontró ningún usuario con ese ID.");
           return;
         }
-
 
         // Navegar a la nueva pantalla (ejemplo: HomeScreen)
         print('Llegó antes del if $rolU');
@@ -432,7 +433,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                                         navigatorKey.currentState!.push(
                                           MaterialPageRoute(builder: (context) => const ClientesLog()),
                                         );
-
                                       }
      
                                     } catch (error) {

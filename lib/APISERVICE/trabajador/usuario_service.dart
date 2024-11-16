@@ -20,6 +20,7 @@ Future<List<Usuario>> getUser() async {
 
   if (response.statusCode == 200) {
     List<dynamic> data = json.decode(response.body);
+    
     return data.map((json) => Usuario.fromJson(json)).toList();
     print("funca");
   } else {
@@ -59,7 +60,9 @@ Future<List<Usuario>> getRolUser(String id) async {
 
     // Aquí verificamos si la respuesta es un solo usuario
     if (data.isNotEmpty) {
+      print('entro al if data empty 1');
       Usuario usuario = Usuario.fromJson(data);
+      print('entro al if data empty 2');
       return [usuario]; // Retorna una lista con un solo usuario
     } else {
       print("El objeto de usuario está vacío.");
