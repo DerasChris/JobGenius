@@ -12,13 +12,15 @@ Future<void> main() async {
  */
 
 class TrabajadoresLog extends StatelessWidget {
-  const TrabajadoresLog({super.key});
+   final VoidCallback onLogout;
+
+  const TrabajadoresLog({super.key, required this.onLogout});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: NavigationSolicitantes(),
+      home: NavigationSolicitantes(onLogout: onLogout),
     );
   }
 }

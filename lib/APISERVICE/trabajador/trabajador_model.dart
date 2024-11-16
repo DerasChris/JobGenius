@@ -19,18 +19,18 @@ class Trabajador {
     required this.descripcion,
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      "usuarioId": usuarioId,
-      "profesion": profesion,
-      "categorias": categorias,
-      "calificacion": {"\$numberDouble": calificacion.toString()},
-      "curriculum": curriculum,
-      "cantidadTrabajosRealizados": {"\$numberInt": cantidadTrabajosRealizados.toString()},
-      "aniosExperiencia": {"\$numberInt": aniosExperiencia.toString()},
-      "descripcion": descripcion,
-    };
-  }
+Map<String, dynamic> toJson() {
+  return {
+    "usuarioId": usuarioId,
+    "profesion": profesion,
+    "categorias": categorias,
+    "calificacion": calificacion, // Enviar directamente como double
+    "curriculum": curriculum,
+    "cantidadTrabajosRealizados": cantidadTrabajosRealizados, // Enviar directamente como int
+    "aniosExperiencia": aniosExperiencia, // Enviar directamente como int
+    "descripcion": descripcion,
+  };
+}
 
   factory Trabajador.fromJson(Map<String, dynamic> json) {
     return Trabajador(

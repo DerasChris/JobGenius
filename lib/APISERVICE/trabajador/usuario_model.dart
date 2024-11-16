@@ -25,6 +25,7 @@ class Usuario {
 
   // Método para convertir de JSON a objeto Usuario
   factory Usuario.fromJson(Map<String, dynamic> json) {
+    
     return Usuario(
       id: json['_id'],
       firebaseUID: json['firebaseUID'],

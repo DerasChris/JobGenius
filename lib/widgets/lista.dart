@@ -1,128 +1,96 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:jobjenius/APISERVICE/trabajador/usuario_model.dart';
+import 'package:jobjenius/APISERVICE/trabajador/usuario_service.dart';
 import 'package:jobjenius/detalleTrabajador.dart';
-import 'package:jobjenius/main.dart';
 
-class ListItemWidget extends StatelessWidget {
+class ListItemWidget extends StatefulWidget {
   const ListItemWidget({super.key});
+
+  @override
+  _ListItemWidgetState createState() => _ListItemWidgetState();
+}
+
+class _ListItemWidgetState extends State<ListItemWidget> {
+  List<Usuario> trabajadores = []; // Lista que contendrá los trabajadores
+  bool isLoading = true; // Para saber si los datos están cargando
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTrabajadores(); // Cargar los trabajadores cuando el widget se inicializa
+  }
+
+  // Método para cargar los trabajadores desde el servicio
+  Future<void> _loadTrabajadores() async {
+    try {
+      List<Usuario> trabajadoresList = await getUser(); // Llamada al servicio
+      setState(() {
+        trabajadores = trabajadoresList;
+        isLoading = false; // Detener la carga una vez que los datos se han obtenido
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      print('Error al cargar los trabajadores: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 160,
-      child: GestureDetector(
-         onTap: () {
-          navigatorKey.currentState?.push(
-            MaterialPageRoute(builder: (context) => const DetalleTrabajador(trabajador: 'aa',)),
-          );
-        },
-        child: ListView.builder(
-          shrinkWrap: false,
-          scrollDirection: Axis.horizontal,
-          itemCount: _list.length,
-          padding: const EdgeInsets.only(left: 15,right: 15),
-          itemBuilder: (BuildContext context, int index) {
-            return  Padding(
-              padding: const EdgeInsets.only(left: 10, right: 15, top: 11),
-              child: Column(
-                children: [
-                  Container(
-                    height: 100.0,
-                    width: 100.0,
-                    decoration: BoxDecoration(
-                      color: _list[index].color,
-                      borderRadius: BorderRadius.circular(10)
+      child: isLoading
+          ? const Center(child: CircularProgressIndicator()) // Mostrar cargando
+          : ListView.builder(
+              shrinkWrap: false,
+              scrollDirection: Axis.horizontal,
+              itemCount: trabajadores.length,
+              padding: const EdgeInsets.only(left: 15, right: 15),
+              itemBuilder: (BuildContext context, int index) {
+                final trabajador = trabajadores[index];
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetalleTrabajador(
+                          trabajador: trabajador.firebaseUID, // Pasar trabajador específico
+                        ),
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 15, top: 11),
+                    child: Column(
+                      children: [
+                        ClipOval(
+                          child: Container(
+                            height: 100.0,
+                            width: 100.0,
+                            decoration: BoxDecoration(
+                              color: Colors.blue, // Color de fondo si la imagen no está disponible
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Image.network(
+                              trabajador.url, // Usar la URL de la imagen del trabajador
+                              fit: BoxFit.cover, // Ajustar la imagen para cubrir el círculo sin distorsionarla
+                              errorBuilder: (context, error, stackTrace) => const Icon(Icons.error), // Mostrar icono si falla la carga
+                            ),
+                          ),
+                        ),
+                        Text(
+                          trabajador.nombreCompleto, 
+                        ),
+                        Text(
+                          trabajador.telefono, 
+                        ),
+                      ],
                     ),
-                    child: Image.asset('assets/${_list[index].imagen}'),
                   ),
-                  Text(
-                    _list[index].text,
-                  ),
-                  Text(
-                    _list[index].profesion
-                  )
-                ],
-              ),
-            );
-          } ,
-        ),
-      ),
+                );
+              },
+            ),
     );
   }
 }
-
-
-class StyleModel {
-  final int id;
-  final Color color;
-  final List<BoxShadow> boxShadow;
-  final String text;
-  final String profesion;
-  final String imagen;
-
-  StyleModel({required this.id, required this.color, required this.boxShadow, required this.text, required this.profesion, required this.imagen});
-}
-
-List<StyleModel> _list = [
-  StyleModel(
-    id: 1,
-    color: const Color.fromARGB(255, 0, 51, 102),
-     boxShadow: [
-      const BoxShadow(
-        color: Colors.black54,
-        blurRadius: 5.0,
-        spreadRadius: 9.00,
-        offset: Offset(3.0,5.8)
-      )
-    ],
-    text: 'José Queza',
-    profesion: 'Obrero',
-    imagen: 'image 15.png'
-  ),
-  StyleModel(
-    id: 2,
-    color: const Color.fromARGB(255, 0, 51, 102),
-     boxShadow: [
-      const BoxShadow(
-        color: Colors.black54,
-        blurRadius: 5.0,
-        spreadRadius: 9.00,
-        offset: Offset(3.0,5.8)
-      )
-    ],
-    text: 'Carlos turcios',
-    profesion: 'Plomero',
-    imagen: 'image 16.png'
-  ),
-  StyleModel(
-    id: 3,
-    color: const Color.fromARGB(255, 0, 51, 102),
-     boxShadow: [
-      const BoxShadow(
-        color: Colors.black54,
-        blurRadius: 5.0,
-        spreadRadius: 9.00,
-        offset: Offset(3.0,5.8)
-      )
-    ],
-    text: 'José madiel',
-    profesion: 'Mecanico',
-    imagen: 'image 17.png'
-  ),
-  StyleModel(
-    id: 4,
-    color: const Color.fromARGB(255, 0, 51, 102),
-     boxShadow: [
-      const BoxShadow(
-        color: Colors.black54,
-        blurRadius: 5.0,
-        spreadRadius: 9.00,
-        offset: Offset(3.0,5.8)
-      )
-    ],
-    text: 'José Queza',
-    profesion: 'Mecanico',
-    imagen: 'image 15.png'
-  )
-  
-];
