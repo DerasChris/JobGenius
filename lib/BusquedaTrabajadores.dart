@@ -1,6 +1,12 @@
 import 'package:filter_list/filter_list.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jobjenius/APISERVICE/trabajador/trabajador_model.dart';
+import 'package:jobjenius/APISERVICE/trabajador/trabajador_service.dart';
+import 'package:jobjenius/APISERVICE/trabajador/usuario_model.dart';
+import 'package:jobjenius/APISERVICE/trabajador/usuario_service.dart';
+import 'package:jobjenius/detalleTrabajador.dart';
+import 'package:jobjenius/main.dart';
 import 'package:jobjenius/theme/app_color.dart';
 import 'package:jobjenius/utils/utils.dart';
 import 'package:jobjenius/widgets/SearchBarWidget.dart';
@@ -15,6 +21,31 @@ class BusquedaTabajadores extends StatefulWidget {
 
 
 class _BusquedaTabajadoresState extends State<BusquedaTabajadores> {
+
+  List<Usuario> trabajadores = []; 
+  bool isLoading = true; 
+  
+    @override
+  void initState() {
+    super.initState();
+    _loadTrabajadores(); 
+  }
+
+   Future<void> _loadTrabajadores() async {
+    try {
+      List<Usuario> trabajadoresList = await getUser(); // Llamada al servicio
+      setState(() {
+        trabajadores = trabajadoresList;
+        isLoading = false; // Detener la carga una vez que los datos se han obtenido
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      print('Error al cargar las categorías: $e');
+      print(categorias);
+    }
+  }
 
   void openFilterDialog() async {
     await FilterListDialog.display<Categorias>(
@@ -43,7 +74,10 @@ class _BusquedaTabajadoresState extends State<BusquedaTabajadores> {
       backgroundColor: appColor.fondo,
       body: Padding(
         padding: const EdgeInsets.only(top: 50, left: 25, right: 25),
-        child: Column(
+        child: 
+        isLoading
+        ?const Center(child: CircularProgressIndicator())
+        :Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -67,14 +101,33 @@ class _BusquedaTabajadoresState extends State<BusquedaTabajadores> {
               ),
             Expanded(
               child: ListView.builder(
-                itemCount: _busqueda.length,
+                itemCount: trabajadores.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
                     child: ListTile(
-                      leading: Image.asset('assets/${_busqueda[index].imagen}',width: 60,height: 60, fit: BoxFit.cover,),
-                      title: Text(_busqueda[index].text,style: Utils.poppins(14, FontWeight.w700, Colors.black),),
-                      subtitle: Text(_busqueda[index].profesion,style: Utils.poppins(12, FontWeight.w700, Colors.black),),
-                      trailing: const Icon(Icons.arrow_forward),
+                      leading: Image.asset('assets/image 15.png'),
+                      title: Text('Nombre: '+trabajadores[index].nombreCompleto,style: Utils.poppins(14, FontWeight.w700, Colors.black),),
+                      subtitle: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Tel:'+trabajadores[index].telefono,style: Utils.poppins(12, FontWeight.w700, Colors.black),),
+                          Text('Dirección: '+trabajadores[index].ubicacion,style: Utils.poppins(12, FontWeight.w700, Colors.black),),
+                          Text('Email '+trabajadores[index].email ,style: Utils.poppins(12, FontWeight.w700, Colors.black),),
+                          Text('ID '+trabajadores[index].firebaseUID ,style: Utils.poppins(12, FontWeight.w700, Colors.black),),
+                        ],
+                      ),
+                      trailing: GestureDetector(
+                        child: const Icon(Icons.arrow_forward),
+                        onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => DetalleTrabajador(trabajador: trabajadores[index].firebaseUID,),
+                                    ),
+                                  );
+                                }
+                        ),
                     ),
                   );
                 },
@@ -88,125 +141,7 @@ class _BusquedaTabajadoresState extends State<BusquedaTabajadores> {
 }
 
 
-class Busquedas {
-  final int id;
-  final Color color;
-  final List<BoxShadow> boxShadow;
-  final String text;
-  final String profesion;
-  final String imagen;
 
-  Busquedas({required this.id, required this.color, required this.boxShadow, required this.text, required this.profesion, required this.imagen});
-}
-
-List<Busquedas> _busqueda = [
-Busquedas(
-    id: 1,
-    color: const Color.fromARGB(255, 0, 51, 102),
-     boxShadow: [
-      const BoxShadow(
-        color: Colors.black54,
-        blurRadius: 5.0,
-        spreadRadius: 9.00,
-        offset: Offset(3.0,5.8)
-      )
-    ],
-    text: 'José Queza',
-    profesion: 'Obrero',
-    imagen: 'image 15.png'
-  ),
- Busquedas(
-    id: 2,
-    color: const Color.fromARGB(255, 0, 51, 102),
-     boxShadow: [
-      const BoxShadow(
-        color: Colors.black54,
-        blurRadius: 5.0,
-        spreadRadius: 9.00,
-        offset: Offset(3.0,5.8)
-      )
-    ],
-    text: 'Carlos turcios',
-    profesion: 'Plomero',
-    imagen: 'image 16.png'
-  ),
-  Busquedas(
-    id: 3,
-    color: const Color.fromARGB(255, 0, 51, 102),
-     boxShadow: [
-      const BoxShadow(
-        color: Colors.black54,
-        blurRadius: 5.0,
-        spreadRadius: 9.00,
-        offset: Offset(3.0,5.8)
-      )
-    ],
-    text: 'José madiel',
-    profesion: 'Mecanico',
-    imagen: 'image 17.png'
-  ),
-  Busquedas(
-    id: 4,
-    color: const Color.fromARGB(255, 0, 51, 102),
-     boxShadow: [
-      const BoxShadow(
-        color: Colors.black54,
-        blurRadius: 5.0,
-        spreadRadius: 9.00,
-        offset: Offset(3.0,5.8)
-      )
-    ],
-    text: 'José Queza',
-    profesion: 'Mecanico',
-    imagen: 'image 15.png'
-  ),
-   Busquedas(
-    id: 5,
-    color: const Color.fromARGB(255, 0, 51, 102),
-     boxShadow: [
-      const BoxShadow(
-        color: Colors.black54,
-        blurRadius: 5.0,
-        spreadRadius: 9.00,
-        offset: Offset(3.0,5.8)
-      )
-    ],
-    text: 'José Queza',
-    profesion: 'Mecanico',
-    imagen: 'image 15.png'
-  ),
-   Busquedas(
-    id: 6,
-    color: const Color.fromARGB(255, 0, 51, 102),
-     boxShadow: [
-      const BoxShadow(
-        color: Colors.black54,
-        blurRadius: 5.0,
-        spreadRadius: 9.00,
-        offset: Offset(3.0,5.8)
-      )
-    ],
-    text: 'José Queza',
-    profesion: 'Mecanico',
-    imagen: 'image 15.png'
-  )
-  ,
-   Busquedas(
-    id: 7,
-    color: const Color.fromARGB(255, 0, 51, 102),
-     boxShadow: [
-      const BoxShadow(
-        color: Colors.black54,
-        blurRadius: 5.0,
-        spreadRadius: 9.00,
-        offset: Offset(3.0,5.8)
-      )
-    ],
-    text: 'José Queza',
-    profesion: 'Mecanico',
-    imagen: 'image 15.png'
-  )
-];
 
 class Categorias {
   final String? name;
