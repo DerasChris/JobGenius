@@ -7,7 +7,7 @@ import 'utils/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'logg.dart'; 
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+//final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() {
   runApp(const LoginWidget());
 } 
@@ -19,7 +19,7 @@ class LoginWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       
-      navigatorKey: navigatorKey,
+      //navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Container(
@@ -128,9 +128,9 @@ class LoginWidget extends StatelessWidget {
                             const SizedBox(height: 40,),
                             GestureDetector(
                               onTap: () {
-                                 navigatorKey.currentState?.push(
+                                /*  navigatorKey.currentState?.push(
                                   MaterialPageRoute(builder: (context) => const ClientesLog()),
-                                );
+                                ); */
                                 
                               },
                               child: Container(
