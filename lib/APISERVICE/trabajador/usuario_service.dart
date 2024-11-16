@@ -28,6 +28,24 @@ Future<List<Usuario>> getUser() async {
   }
 }
 
+// Servicio para obtener las categorías de oficios
+Future<Usuario> datosUsuario(String id) async {
+  final response = await http.get(
+    Uri.parse('$baseUrl/usuario/$id'),
+    headers: {"Content-Type": "application/json"},
+  );
+
+  print('Código de respuesta: ${response.statusCode}');
+  print('Respuesta del servidor: ${response.body}');
+
+  if (response.statusCode == 200) {
+    var data = json.decode(response.body);  // Aquí no necesitamos una lista
+    return Usuario.fromJson(data);  // Convertir el objeto único en un Usuario
+  } else {
+    throw Exception('Error al obtener los trabajadores');
+  }
+}
+
 Future<String> createUser(Usuario post) async {
   final response = await http.post(
     Uri.parse('$baseUrl/usuario-add'),

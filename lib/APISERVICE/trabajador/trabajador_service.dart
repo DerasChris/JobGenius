@@ -25,3 +25,21 @@ Future<List<Trabajador>> getTrabajadores() async {
     throw Exception('Error al obtener los trabajadores');
   }
 }
+
+Future<String> createTrabajador(Trabajador post) async {
+  final response = await http.post(
+    Uri.parse('$baseUrl/trabajadores/add-trabajador'),
+    headers: {"Content-Type": "application/json"},
+    body: json.encode(post.toJson()),
+  );
+
+print('Datos enviados: ${json.encode(post.toJson())}');
+  print('Código de respuesta: ${response.statusCode}');
+    print('Respuesta del servidor: ${response.body}');
+
+  if (response.statusCode == 200) {
+    return 'Creado con exito la solicitud..!';
+  } else {
+    throw Exception('Error al crear el post');
+  }
+}

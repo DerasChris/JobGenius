@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jobjenius/theme/app_color.dart';
 import 'package:jobjenius/utils/utils.dart';
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:restart_app/restart_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jobjenius/main.dart';
 
@@ -13,11 +15,17 @@ class perfilTrabajador extends StatefulWidget {
 
 }
 
+
+
 void main() {
   runApp(const perfilTrabajador());
 }
 
 class _perfilTrabajador extends State<perfilTrabajador>{
+
+  void _onLogout() {
+    Navigator.of(context, rootNavigator: true).popUntil((route) => route.isFirst);
+  }
 
   bool _isAnimating = false;
 
@@ -290,9 +298,24 @@ class _perfilTrabajador extends State<perfilTrabajador>{
                                             ),
                                           ),
                                           GestureDetector(
-                                            onTap: () {
-                                              Navigator.pop(context);
-                                            },
+                                            onTap: () async {
+    try {
+      // Limpiar el estado de sesión
+      deleteUID();
+      await FirebaseAuth.instance.signOut();
+
+ _onLogout();
+
+    } catch (e) {
+      print('Error al cerrar sesión: $e');
+      // Mostrar un mensaje de error al usuario
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error al cerrar sesión: $e'),
+        ),
+      );
+    }
+  },
                                             child: Padding(
                                               padding: const EdgeInsets.all(15),
                                               child: Row(

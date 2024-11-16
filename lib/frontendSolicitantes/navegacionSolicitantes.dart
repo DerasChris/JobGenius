@@ -12,7 +12,8 @@ import 'package:jobjenius/seguridad.dart';
 import 'package:jobjenius/theme/app_color.dart';
 
 class NavigationSolicitantes extends StatefulWidget {
-  const NavigationSolicitantes({super.key});
+   final VoidCallback onLogout;
+  const NavigationSolicitantes({super.key, required this.onLogout});
 
   @override
   State<NavigationSolicitantes> createState() => _NavigationState();

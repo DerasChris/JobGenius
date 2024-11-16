@@ -34,6 +34,7 @@ class _BusquedaTabajadoresState extends State<BusquedaTabajadores> {
    Future<void> _loadTrabajadores() async {
     try {
       List<Usuario> trabajadoresList = await getUser(); // Llamada al servicio
+      print('DIEEE');
       setState(() {
         trabajadores = trabajadoresList;
         isLoading = false; // Detener la carga una vez que los datos se han obtenido
@@ -42,8 +43,7 @@ class _BusquedaTabajadoresState extends State<BusquedaTabajadores> {
       setState(() {
         isLoading = false;
       });
-      print('Error al cargar las categorías: $e');
-      print(categorias);
+      print('Error al cargar los trabajadores: $e');
     }
   }
 
