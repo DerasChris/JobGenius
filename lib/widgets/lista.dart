@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jobjenius/APISERVICE/trabajador/usuario_model.dart';
 import 'package:jobjenius/APISERVICE/trabajador/usuario_service.dart';
 import 'package:jobjenius/detalleTrabajador.dart';
+import 'package:jobjenius/theme/app_color.dart';
 
 class ListItemWidget extends StatefulWidget {
   const ListItemWidget({super.key});
@@ -38,11 +39,13 @@ class _ListItemWidgetState extends State<ListItemWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 160,
-      child: isLoading
+    return 
+     isLoading
           ? const Center(child: CircularProgressIndicator()) // Mostrar cargando
-          : ListView.builder(
+          :
+    SizedBox(
+      height: 160,
+      child: ListView.builder(
               shrinkWrap: false,
               scrollDirection: Axis.horizontal,
               itemCount: trabajadores.length,
@@ -69,14 +72,26 @@ class _ListItemWidgetState extends State<ListItemWidget> {
                             height: 100.0,
                             width: 100.0,
                             decoration: BoxDecoration(
-                              color: Colors.blue, // Color de fondo si la imagen no está disponible
+                              color: appColor.azul, // Color de fondo si la imagen no está disponible
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Image.network(
-                              trabajador.url, // Usar la URL de la imagen del trabajador
-                              fit: BoxFit.cover, // Ajustar la imagen para cubrir el círculo sin distorsionarla
-                              errorBuilder: (context, error, stackTrace) => const Icon(Icons.error), // Mostrar icono si falla la carga
-                            ),
+                        trabajador.url,
+                        fit: BoxFit.cover,
+                         loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  } else {
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        value: loadingProgress.expectedTotalBytes != null
+                                            ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                                            : null,
+                                      ),
+                                    );
+                                  }
+                                },
+                      ),
                           ),
                         ),
                         Text(
