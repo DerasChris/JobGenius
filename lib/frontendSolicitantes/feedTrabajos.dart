@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:jobjenius/APISERVICE/trabajador/usuario_model.dart';
+import 'package:jobjenius/APISERVICE/trabajador/usuario_service.dart';
 import 'package:jobjenius/theme/app_color.dart';
 import 'package:jobjenius/APISERVICE/trabajador/post_model.dart';
 import 'package:jobjenius/APISERVICE/trabajador/service.dart';
+import 'package:jobjenius/utils/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:jobjenius/VistaTrabajador.dart';
 
 class PaginaDeTrabajos extends StatefulWidget {
   const PaginaDeTrabajos({super.key});
@@ -13,6 +15,8 @@ class PaginaDeTrabajos extends StatefulWidget {
 }
 
 class _PaginaDeTrabajosState extends State<PaginaDeTrabajos> {
+  double _imageSize = 150.0;
+
 
   @override
    void initState() {
@@ -22,7 +26,9 @@ class _PaginaDeTrabajosState extends State<PaginaDeTrabajos> {
 
 
   List<Post> solicitudes = []; 
+  List<Usuario>? solicitante = []; 
   bool isLoading = true; 
+
 
   Future<String?> getUID() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -46,76 +52,195 @@ class _PaginaDeTrabajosState extends State<PaginaDeTrabajos> {
     }
   }
 
-  String etiquetaSeleccionada = 'Todos';
+    Future<void> _loadTrabajador(String id) async {
+    try {
 
-  /* final List<Map<String, String>> trabajos = [
-    {
-      'titulo': 'Albañil (Trabajo Eventual)',
-      'descripcion': 'Quiero hacer un muro en mi casa, ¿Algún albañil? Soy de San Salvador. Pago por obra.',
-      'etiqueta': 'Albañil',
+    final solicitantesList = await datosUsuario(id); // Llamada al servicio
+      setState(() {
+        solicitante = [solicitantesList];
+        isLoading = false; // Detener la carga una vez que los datos se han obtenido
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      print('Error al cargar las categorías: $e');
+      print(solicitudes);
+    }
+  }
+
+
+  String etiquetaSeleccionada = 'Todos';
+ Future<void> _showMyDialog(Post solicitud) async {
+      await _loadTrabajador(solicitud.usuarioId);
+      return showModalBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+        ),
+        backgroundColor: Colors.white,
+        builder: (BuildContext context) {
+          return Padding(
+            padding: EdgeInsets.only(
+              top: 16.0,
+              left: 16.0,
+              right: 16.0,
+              bottom: MediaQuery.of(context).viewInsets.bottom + 16.0,
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Center(
+                    child: Text(
+                      'Detalles del Trabajo',
+                      textAlign: TextAlign.center,
+                      style: Utils.poppins(24, FontWeight.w700, Colors.black),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  _buildInfoRow('Usuario ID:', solicitud.usuarioId),
+                  _buildInfoRow('Trabajador ID:', solicitud.trabajadorId),
+                  _buildInfoRow('Tipo de Trabajo:', solicitud.tipoTrabajo),
+                  _buildInfoRow('Descripción:', solicitud.descripcionProblema),
+                  _buildInfoRow('Nivel de Urgencia:', solicitud.nivelUrgencia),
+                  _buildInfoRow('Hora:', solicitud.hora),
+                  _buildInfoRow('Fecha:', solicitud.fecha),
+                  _buildInfoRow('Presupuesto:', '\$${solicitud.presupuesto}'),
+                  _buildInfoRow('Estado:', solicitud.estado),
+                  SizedBox(height: 16),
+                  Center(
+                    child: GestureDetector(
+                      onTapDown: (_) {
+                        setState(() {
+                          _imageSize = 160.0; 
+                        });
+                      },
+                      onTapUp: (_) {
+                        setState(() {
+                          _imageSize = 80.0; 
+                        });
+                      },
+                      child: AnimatedContainer(
+                        duration: Duration(milliseconds: 200),
+                        width: _imageSize,
+                        height: _imageSize,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              blurRadius: 5,
+                              offset: Offset(0, 5),
+                            ),
+                          ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15.0),
+                          child: Image.network(
+                            solicitud.fotosProblema,
+                            fit: BoxFit.cover,
+                            loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              } else {
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes != null
+                                        ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                                        : null,
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  isLoading
+                    ? CircularProgressIndicator()
+                    : (solicitante != null && solicitante!.isNotEmpty)
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildInfoRow('Nombre Completo:', solicitante![0].nombreCompleto),
+                              _buildInfoRow('Teléfono:', solicitante![0].telefono),
+                              _buildInfoRow('Correo:', solicitante![0].email),
+                            ],
+                          )
+                        : Text('No se encontraron datos del solicitante.'),
+                  SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: Text(
+                          'Cancelar',
+                          style: Utils.poppins(18, FontWeight.w600, appColor.amarillo),
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text(
+                          'Aceptar',
+                          style: Utils.poppins(18, FontWeight.w600, appColor.azul),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    }
+
+
+
+void _toggleImageSize(BuildContext context, String imageUrl) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        child: Image.network(imageUrl, fit: BoxFit.cover),
+      );
     },
-    {
-      'titulo': 'Electricista (Trabajo Eventual)',
-      'descripcion': 'Necesito un electricista para instalar y mantener sistemas eléctricos en Santa Tecla. Pago por obra.',
-      'etiqueta': 'Electricista',
-    },
-    {
-      'titulo': 'Pastelero (Trabajo Permanente)',
-      'descripcion': 'Pastelería en San Salvador busca pastelero con experiencia en repostería fina. \$350 al mes.',
-      'etiqueta': 'Pastelero',
-    },
-    {
-      'titulo': 'Agricultor (Trabajo Permanente)',
-      'descripcion': 'Se necesita agricultor con experiencia en cultivos de maíz y frijol en La Libertad. \$350 al mes.',
-      'etiqueta': 'Agricultor',
-    },
-    {
-      'titulo': 'Artesano (Trabajo Eventual)',
-      'descripcion': 'Buscamos artesano para crear productos personalizados en San Miguel. Pago por obra.',
-      'etiqueta': 'Artesano',
-    },
-    {
-      'titulo': 'Zapatero (Trabajo Permanente)',
-      'descripcion': 'Se busca zapatero con experiencia en reparación de calzado en Santa Ana. \$400 al mes.',
-      'etiqueta': 'Zapatero',
-    },
-    {
-      'titulo': 'Panadero (Trabajo Permanente)',
-      'descripcion': 'Panadería en San Salvador busca panadero con experiencia en panadería artesanal. \$450 al mes.',
-      'etiqueta': 'Panadero',
-    },
-    {
-      'titulo': 'Jardinero (Trabajo Eventual)',
-      'descripcion': 'Se necesita jardinero para mantenimiento de jardines en San Vicente. Pago por obra.',
-      'etiqueta': 'Jardinero',
-    },
-    {
-      'titulo': 'Vigilante (Trabajo Permanente)',
-      'descripcion': 'Condominio privado en San Salvador busca vigilante con experiencia. \$500 al mes.',
-      'etiqueta': 'Vigilante',
-    },
-    {
-      'titulo': 'Portero (Trabajo Permanente)',
-      'descripcion': 'Se busca portero para edificio residencial en Santa Tecla. \$400 al mes.',
-      'etiqueta': 'Portero',
-    },
-    {
-      'titulo': 'Plomero (Trabajo Eventual)',
-      'descripcion': 'Necesito plomero urgente en San Miguel. Pago por obra.',
-      'etiqueta': 'Plomero',
-    },
-    {
-      'titulo': 'Instalador de Calefacción (Trabajo Eventual)',
-      'descripcion': 'Busco instalador de calefacción con experiencia para vivienda en San Salvador. Pago por obra.',
-      'etiqueta': 'Instalador de Calefacción',
-    },
-    {
-      'titulo': 'Fontanero (Trabajo Eventual)',
-      'descripcion': 'Se busca fontanero con experiencia en mantenimiento de sistemas de agua en Santa Ana. Pago por obra.',
-      'etiqueta': 'Fontanero',
-    },
-  ];
- */
+  );
+}
+
+Widget _buildInfoRow(String label, String value) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 4.0),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: 2,
+          child: Text(
+            label,
+            style: Utils.poppins(18, FontWeight.w600, Colors.black),
+          ),
+        ),
+        Expanded(
+          flex: 3,
+          child: Text(
+            value,
+            style: Utils.poppins(18, FontWeight.normal, Colors.black),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+
   
   @override
   Widget build(BuildContext context) {
@@ -139,40 +264,7 @@ class _PaginaDeTrabajosState extends State<PaginaDeTrabajos> {
       ),
       body: Column(
         children: [
-          /* Container(
-            color: appColor.fondo, 
-            child: Padding(
-              padding: const EdgeInsets.only(top: 25, left: 25, right: 25),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    value: etiquetaSeleccionada,
-                    isExpanded: true,
-                    items: <String>['Todos', 'Albañil', 'Electricista', 'Pastelero', 'Agricultor', 'Artesano', 'Zapatero', 'Panadero', 'Jardinero', 'Vigilante', 'Portero', 'Plomero', 'Instalador de Calefacción', 'Fontanero']
-                        .map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: const TextStyle(color: Colors.grey),
-                        ),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      /* setState(() {
-                        etiquetaSeleccionada = newValue!;
-                      }); */
-                    },
-                  ),
-                ),
-              ),
-            ),
-          ), */
+         
           const SizedBox(height: 20),
           Expanded(
             child: Container(
@@ -210,28 +302,8 @@ class _PaginaDeTrabajosState extends State<PaginaDeTrabajos> {
                             const SizedBox(height: 8),
                             ElevatedButton(
                               onPressed: () {
+                                _showMyDialog(solicitudes[index]);
                                 
-                                  // Crear la solicitud con los datos del formulario
-                                  /* final solicitud = SolicitudTrabajo(
-                                    nombre: solicitudes[index].trabajadorId,
-                                    telefono: solicitudes[index].usuarioId,
-                                    ubicacion: solicitudes[index].descripcionProblema,
-                                    tipoTrabajo: solicitudes[index].tipoTrabajo,
-                                    descripcion: solicitudes[index].descripcionProblema,
-                                    urgencia: solicitudes[index].nivelUrgencia,
-                                    fechaHora: solicitudes[index].fecha,
-                                    presupuesto: solicitudes[index].presupuesto,
-                                    metodoPago: solicitudes[index].estado,
-                                    imagenPath: solicitudes[index].fotosProblema);
-                                
-                                
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        Vistatrabajador(solicitud: solicitud),
-                                  ),
-                                ); */
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: appColor.amarillo, 
