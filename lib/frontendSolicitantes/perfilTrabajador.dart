@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:jobjenius/APISERVICE/trabajador/usuario_model.dart';
+import 'package:jobjenius/APISERVICE/trabajador/usuario_service.dart';
 import 'package:jobjenius/theme/app_color.dart';
 import 'package:jobjenius/utils/utils.dart';
 import 'package:avatar_glow/avatar_glow.dart';
@@ -23,11 +25,26 @@ void main() {
 
 class _perfilTrabajador extends State<perfilTrabajador>{
 
+    @override
+  void initState() {
+    super.initState();
+    _loadusuario(); 
+  }
+
   void _onLogout() {
     Navigator.of(context, rootNavigator: true).popUntil((route) => route.isFirst);
   }
 
   bool _isAnimating = false;
+
+  
+  List<Usuario> datosuser = []; 
+bool isLoading = true;
+
+    Future<String?> getUID() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('firebaseUID');
+  }  
 
   Future<void> deleteUID() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -35,6 +52,26 @@ class _perfilTrabajador extends State<perfilTrabajador>{
       await prefs.remove('firebaseUID');
     }
   }
+
+
+  Future<void> _loadusuario() async {
+  try {
+     final String? uid = await getUID();
+    final datosregistro = await datosUsuario(uid!); // Llamada al servicio de usuarios
+    print(uid);
+    setState(() {
+      datosuser = [datosregistro];
+      isLoading = false;  // Cambiar el estado de carga después de que los datos estén listos
+
+
+    });
+  } catch (e) {
+    setState(() {
+      isLoading = false;
+    });
+    print('Error al cargar los datos: $e');
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -97,10 +134,13 @@ class _perfilTrabajador extends State<perfilTrabajador>{
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(width: 2.5, color: Colors.white)
                                 ),
-                                child: ClipRRect(
+                                child: 
+                                 isLoading
+                                    ?Center(child: CircularProgressIndicator())
+                                :ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset(
-                                    'assets/armando_casas_1.jpg', 
+                                  child: Image.network(
+                                    datosuser.single.url, 
                                     width: 50,
                                   ),
                                 )
@@ -125,15 +165,15 @@ class _perfilTrabajador extends State<perfilTrabajador>{
                                       child: Column(
                                         children: [
                                           Text(
-                                            "Armando Esteban Quito",
+                                            datosuser.single.nombreCompleto,
                                             style: Utils.poppins(20, FontWeight.w600, Colors.black)
                                           ),
                                           Text(
-                                            "Albañil",
+                                            datosuser.single.rol,
                                             style: Utils.poppins(12, FontWeight.bold, Colors.black)
                                           ),
                                           Text(
-                                            "armandoquito@gmail.com",
+                                            datosuser.single.email,
                                             style: Utils.poppins(12, FontWeight.normal, Colors.black)
                                           ),
                                         ]
@@ -299,23 +339,23 @@ class _perfilTrabajador extends State<perfilTrabajador>{
                                           ),
                                           GestureDetector(
                                             onTap: () async {
-    try {
-      // Limpiar el estado de sesión
-      deleteUID();
-      await FirebaseAuth.instance.signOut();
+                                                    try {
+                                                      // Limpiar el estado de sesión
+                                                      deleteUID();
+                                                      await FirebaseAuth.instance.signOut();
 
- _onLogout();
+                                                _onLogout();
 
-    } catch (e) {
-      print('Error al cerrar sesión: $e');
-      // Mostrar un mensaje de error al usuario
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error al cerrar sesión: $e'),
-        ),
-      );
-    }
-  },
+                                                    } catch (e) {
+                                                      print('Error al cerrar sesión: $e');
+                                                      // Mostrar un mensaje de error al usuario
+                                                      ScaffoldMessenger.of(context).showSnackBar(
+                                                        SnackBar(
+                                                          content: Text('Error al cerrar sesión: $e'),
+                                                        ),
+                                                      );
+                                                    }
+                                                  },
                                             child: Padding(
                                               padding: const EdgeInsets.all(15),
                                               child: Row(
@@ -383,48 +423,7 @@ class _perfilTrabajador extends State<perfilTrabajador>{
                   ],
                 ),
             ),
-            Container(
-              height: 120.0,
-              decoration: BoxDecoration(
-                color: appColor.azul,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20.0),
-                  topRight: Radius.circular(20.0),
-                ),
-              ),
-              child: Center(
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _isAnimating = !_isAnimating;
-                    });
-                  },
-                  child: AvatarGlow(
-                    animate: _isAnimating,
-                    glowColor: const Color.fromARGB(255, 255, 193, 7),
-                    duration: const Duration(milliseconds: 2000),
-                    repeat: true,
-                    child: Material(
-                      elevation: 8.0,
-                      shape: const CircleBorder(),
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color.fromARGB(255, 255, 193, 7),
-                        ),
-                        padding: const EdgeInsets.all(16.0),
-                        child: const Icon(
-                          Icons.mic,
-                          color: Color.fromARGB(255, 0, 51, 102),
-                          size: 40.0,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
+           
           ],
         ),
         ),
